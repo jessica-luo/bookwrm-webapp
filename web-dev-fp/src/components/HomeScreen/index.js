@@ -1,9 +1,14 @@
 import React from "react";
+import NavigationComponent from "../NavigationComponent";
 
 const HomeScreen = () => {
     return (
         <>
-            <h1>Home Screen</h1>
+            <NavigationComponent activeLink={'/home'}/>
+            <div className={"container main-container bg-none"}>
+
+            </div>
+
         </>
     )
 };

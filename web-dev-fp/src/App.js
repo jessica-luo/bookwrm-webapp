@@ -1,7 +1,7 @@
 import './App.css';
-import './vendors/bootstrap/css/bootstrap.min.css';
-import './vendors/bootstrap/bootstrap.min.css';
+import $ from 'jquery';
 import './vendors/fontawesome/css/all.min.css';
+import NavigationComponent from "./components/NavigationComponent";
 import HomeScreen from "./components/HomeScreen";
 import DetailsScreen from "./components/DetailsScreen";
 import LoginScreen from "./components/LoginScreen";
@@ -13,13 +13,14 @@ import {BrowserRouter, Route} from "react-router-dom";
 function App() {
     return (
         <BrowserRouter>
-                <Route path={["/", "/home"]} exact={true} component={HomeScreen}/>
-                <Route path={["/search"]} exact={true} component={SearchScreen}/>
-                <Route path={["/details"]} exact={true} component={DetailsScreen}/>
-                <Route path={["/profile"]} exact={true} component={ProfileScreen}/>
-                <Route path={["/login"]} exact={true} component={LoginScreen}/>
-                <Route path={["/privacy"]} exact={true} component={PrivacyPolicyScreen}/>
+            <Route path={["/", "/home"]} exact={true} component={HomeScreen}/>
+            <Route path={["/search"]} exact={true} component={SearchScreen}/>
+            <Route path={["/details"]} exact={true} component={DetailsScreen}/>
+            <Route path={["/profile"]} exact={true} component={ProfileScreen}/>
+            <Route path={["/login"]} exact={true} component={LoginScreen}/>
+            <Route path={["/privacy"]} exact={true} component={PrivacyPolicyScreen}/>
         </BrowserRouter>
+
     );
 }
 
