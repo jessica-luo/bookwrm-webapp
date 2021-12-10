@@ -1,51 +1,47 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
-import {loginUser} from "../../services/userService";
+import {loginUser as login}  from "../../services/userService";
 import {Link, useHistory} from "react-router-dom";
-import {loginAuthor} from "../../services/authorService";
+import authorService, {loginAuthor} from "../../services/authorService";
 import axios from 'axios';
+import {useState} from "react";
+import userService from "../../services/userService";
 
+const LoginScreen = ({setLoginUser}) => {
 
-export default class LoginScreen extends React.Component {
+    const [user, setUser] = useState({username: '', password: ''})
 
-    state = {
-        username: '',
-        password: ''
-    }
+    const loginUser = (user) =>
+        userService.loginUser(user)
+             .then(state => {setLoginUser(state.user)})
 
-    loginUser = (state) =>
-        //console.log(state)
-        loginUser(state)
-             .then(state => this.props.history.push("/"))
+    const loginAuthor = (user) =>
+        authorService.loginAuthor(user)
+            .then(state => setLoginUser(state.user))
 
-    loginAuthor = (state) =>
-        loginAuthor(state)
-            .then(state => this.props.history.push("/"))
-
-    render() {
         return (
             <>
                 <NavigationComponent activeLink={'/login'}/>
 
                 <div className={"container main-container bg-none"}>
                     <h1 className={"mt-5"}>Login</h1>
-                    <input value={this.state.username}
-                        onChange={(e) => this.setState({
-                               username: e.target.value
+                    <input value={user.username}
+                        onChange={(e) => setUser({
+                               ...user, username: e.target.value, password: user.password
                            })}
                            placeholder={"username"} className={`form-control mt-1`}/>
                     <input
-                        value={this.state.password}
-                        onChange={(e) => this.setState({
-                            password: e.target.value
+                        value={user.password}
+                        onChange={(e) => setUser({
+                            ...user, password: e.target.value, username: user.username
                         })}
                         placeholder={"password"} type={"password"} className={`form-control mt-1`}/>
                     <button
-                        onClick={() => this.loginUser(this.state)}
+                        onClick={() => loginUser(user)}
                         className={`btn btn-success mt-1`}>Login as Reader</button>
                     <button
-                        onClick={() => this.loginAuthor(this.state)}
+                        onClick={() => loginAuthor(user)}
                         className={`btn btn-primary mt-1`}>Login as Author</button>
 
                     <br/>
@@ -58,5 +54,6 @@ export default class LoginScreen extends React.Component {
                 <Footer/>
             </>
         )
-    }
 };
+
+export default LoginScreen;
