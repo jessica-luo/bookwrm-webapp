@@ -1,31 +1,34 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
-import Footer from "../FooterComponent";
+import {createUser} from "../../services/userService";
+import {createAuthor} from "../../services/authorService";
 
-export default class ProfileScreen extends React.Component {
-
+export default class RegisterScreen extends React.Component {
     state = {
-        profile: {
-            username: '',
-            password: '',
-            email: '',
-            firstName: '',
-            lastName: ''
-        }
+        username: '',
+        password: '',
+        email: '',
+        firstName: '',
+        lastName: ''
     }
 
-    edit = (user) =>
-        console.log(user)
+    registerUser = (user) =>
+        createUser(user)
+            .then(user => this.props.history.push('/profile'))
+
+    registerAuthor = (user) =>
+        createAuthor(user)
+            .then(user => this.props.history.push('profile'))
 
     render() {
         return (
             <>
                 <NavigationComponent activeLink={'/login'}/>
-                <h1>Profile page</h1>
+                <h1>Login Page</h1>
 
                 <div className={"container main-container bg-none"}>
 
-                    <h1 className={"mt-5"}>Update Profile</h1>
+                    <h1 className={"mt-5"}>Register</h1>
                     <input value={this.state.username}
                            onChange={(e) => this.setState({
                                username: e.target.value
@@ -51,14 +54,17 @@ export default class ProfileScreen extends React.Component {
                                lastName: e.target.value
                            })}
                            placeholder={"last name"} className={`form-control mt-1`}/>
-                    <button onClick={() => this.edit(this.state)}
-                            className={`btn btn-success`}>Update Profile
+                    <button onClick={() => this.registerUser(this.state)}
+                            className={`btn btn-success`}>Register as a Reader
                     </button>
 
+                    <button onClick={() => this.registerAuthor(this.state)}
+                            className={`btn btn-primary`}>Register as an Author
+                    </button>
+
+                    <p className={"mb-5"}>*Author accounts have different permissions from readers.</p>
                 </div>
-                <Footer/>
             </>
         )
     }
 };
-
