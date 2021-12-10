@@ -28,8 +28,10 @@ app.get('/', (req, res, next) => {
 
 });
 
-require('./book/book-service')(app);
-require('./user/user-service')(app);
+require('./services/book-service')(app);
+require('./services/user-service')(app);
+require('./services/author-service')(app);
+require('./services/author-data-service')(app);
 
 
 app.listen(process.env.PORT || 4000);

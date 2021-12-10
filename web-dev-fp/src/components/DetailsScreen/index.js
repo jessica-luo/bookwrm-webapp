@@ -1,5 +1,6 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
+import Footer from "../FooterComponent";
 
 const DetailsScreen = () => {
 
@@ -7,6 +8,7 @@ const DetailsScreen = () => {
         <>
             <NavigationComponent activeLink={'/details'}/>
             <h1>Details Screen</h1>
+            <Footer/>
         </>
     )
 };

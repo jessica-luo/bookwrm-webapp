@@ -1,5 +1,6 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
+import Footer from "../FooterComponent";
 
 export default class ProfileScreen extends React.Component {
 
@@ -55,7 +56,9 @@ export default class ProfileScreen extends React.Component {
                     </button>
 
                 </div>
+                <Footer/>
             </>
         )
     }
 };
+

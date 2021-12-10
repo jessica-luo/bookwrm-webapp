@@ -1,6 +1,10 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
+import Footer from "../FooterComponent";
+import {createUser} from "../../services/userService";
+import {createAuthor} from "../../services/authorService";
 import {Link} from "react-router-dom";
+
 
 export default class LoginScreen extends React.Component {
 
@@ -39,6 +43,7 @@ export default class LoginScreen extends React.Component {
                         <button className={`btn btn-secondary mt-1`}>Register</button>
                     </Link>
                 </div>
+                <Footer/>
             </>
         )
     }
