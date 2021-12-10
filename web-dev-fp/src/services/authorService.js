@@ -30,8 +30,28 @@ export const updateAuthor = (user) =>
         }
     }).then(response => response.json());
 
+export const registerAuthor = (user) =>
+    fetch(`${URL}/register`, {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(response => response.json());
+
+export const loginAuthor = (user) =>
+    fetch(`${URL}/login`, {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+            'content-type': 'application/json'
+        }
+    })
+        .then(response => response.json());
+
 
 export default {
-    findAllAuthors, deleteAuthor, createAuthor, findAuthorByUsername, updateAuthor
+    findAllAuthors, deleteAuthor, createAuthor, findAuthorByUsername, updateAuthor,
+    registerAuthor, loginAuthor
 };
 
