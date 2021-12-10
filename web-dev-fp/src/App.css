@@ -62,6 +62,7 @@ body {
 
 .page-content {
   position: relative;
+  y: 70px;
   min-height: 100vh;
 }
 
