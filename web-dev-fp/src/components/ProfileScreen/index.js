@@ -1,13 +1,30 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
 
-const ProfileScreen = () => {
-    return (
-        <>
-            <NavigationComponent activeLink={'/profile'}/>
-            <h1>Profile Screen</h1>
-        </>
-    )
-};
+export default class ProfileScreen extends React.Component {
 
-export default ProfileScreen;
+    state = {
+        username: '',
+        password: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        author: false
+    }
+
+    edit = (user) =>
+        console.log(user)
+
+    render() {
+        return (
+            <>
+                <NavigationComponent activeLink={'/login'}/>
+                <h1>Profile page</h1>
+
+                <div className={"container main-container bg-none"}>
+
+                </div>
+            </>
+        )
+    }
+};
