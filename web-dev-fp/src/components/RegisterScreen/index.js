@@ -1,7 +1,7 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
-import {createUser} from "../../services/userService";
-import {createAuthor} from "../../services/authorService";
+import {registerUser} from "../../services/userService";
+import {registerAuthor} from "../../services/authorService";
 
 export default class RegisterScreen extends React.Component {
     state = {
@@ -13,18 +13,17 @@ export default class RegisterScreen extends React.Component {
     }
 
     registerUser = (user) =>
-        createUser(user)
+        registerUser(user)
             .then(user => this.props.history.push('/profile'))
 
     registerAuthor = (user) =>
-        createAuthor(user)
-            .then(user => this.props.history.push('profile'))
+        registerAuthor(user)
+            .then(user => this.props.history.push('/profile'))
 
     render() {
         return (
             <>
                 <NavigationComponent activeLink={'/login'}/>
-                <h1>Login Page</h1>
 
                 <div className={"container main-container bg-none"}>
 
@@ -55,11 +54,11 @@ export default class RegisterScreen extends React.Component {
                            })}
                            placeholder={"last name"} className={`form-control mt-1`}/>
                     <button onClick={() => this.registerUser(this.state)}
-                            className={`btn btn-success`}>Register as a Reader
+                            className={`btn btn-success mt-1`}>Register as a Reader
                     </button>
 
                     <button onClick={() => this.registerAuthor(this.state)}
-                            className={`btn btn-primary`}>Register as an Author
+                            className={`btn btn-primary mt-1`}>Register as an Author
                     </button>
 
                     <p className={"mb-5"}>*Author accounts have different permissions from readers.</p>

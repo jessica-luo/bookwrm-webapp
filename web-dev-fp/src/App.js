@@ -10,9 +10,11 @@ import ProfileScreen from "./components/ProfileScreen";
 import SearchScreen from "./components/SearchScreen";
 import {BrowserRouter, Route} from "react-router-dom";
 import RegisterScreen from "./components/RegisterScreen";
+import {useState} from "react";
 
 
 function App() {
+    const [user, setLoginUser] = useState({})
     return (
         <BrowserRouter>
             <Route path={["/", "/home"]} exact={true} component={HomeScreen}/>

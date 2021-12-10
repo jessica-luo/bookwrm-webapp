@@ -21,7 +21,6 @@ export default class ProfileScreen extends React.Component {
         return (
             <>
                 <NavigationComponent activeLink={'/login'}/>
-                <h1>Profile page</h1>
 
                 <div className={"container main-container bg-none"}>
 
