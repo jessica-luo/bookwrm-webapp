@@ -26,8 +26,14 @@ export const registerUser = (user) =>
         }
     }).then(response => response.json());
 
-export const loginUser = (username, password) =>
-    fetch(`${URL}/login/${username}/${password}`)
+export const loginUser = (user) =>
+    fetch(`${URL}/login`, {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+            'content-type': 'application/json'
+        }
+    })
         .then(response => response.json());
 
 export const findUserByUsername = (username) =>
