@@ -17,6 +17,19 @@ export const createUser = (user) =>
         }
     }).then(response => response.json());
 
+export const registerUser = (user) =>
+    fetch(`${URL}/register`, {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(response => response.json());
+
+export const loginUser = (username, password) =>
+    fetch(`${URL}/login/${username}/${password}`)
+        .then(response => response.json());
+
 export const findUserByUsername = (username) =>
     fetch(`${URL}/${username}`)
         .then(response => response.json());
@@ -79,6 +92,6 @@ export const deleteCurrentlyReading = (user, isbn) =>
 export default {
     findAllUsers, deleteUser, createUser, findUserByUsername,
     deleteCurrentlyReading, deleteRead, deleteToRead,
-    addCurrentlyReading, addToRead, addRead
+    addCurrentlyReading, addToRead, addRead, loginUser, registerUser
 };
 
