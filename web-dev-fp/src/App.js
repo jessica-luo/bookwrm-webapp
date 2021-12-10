@@ -9,6 +9,7 @@ import PrivacyPolicyScreen from "./components/PrivacyPolicyScreen";
 import ProfileScreen from "./components/ProfileScreen";
 import SearchScreen from "./components/SearchScreen";
 import {BrowserRouter, Route} from "react-router-dom";
+import RegisterScreen from "./components/RegisterScreen";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
             <Route path={["/profile"]} exact={true} component={ProfileScreen}/>
             <Route path={["/login"]} exact={true} component={LoginScreen}/>
             <Route path={["/privacy"]} exact={true} component={PrivacyPolicyScreen}/>
+            <Route path={["/register"]} exact={true} component={RegisterScreen}/>
         </BrowserRouter>
 
     );
