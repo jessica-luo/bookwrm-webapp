@@ -1,62 +1,39 @@
 import React from "react";
-import {
-    Box,
-    Container,
-    Row,
-    Column,
-    FooterLink,
-    Heading,
-} from "./footerStyles";
+import {ListGroupItem, ListGroup} from "reactstrap";
 
 const Footer = () => {
     return (
-        <Box>
-            <Container>
-                <Row>
-                    <Column>
-                        <Heading>About Us</Heading>
-                        <FooterLink href="/privacy">Privacy Policy</FooterLink>
-                    </Column>
-                    <Column>
-                        <Heading>Contact Us</Heading>
-                        <FooterLink href="#">Chloe Strandwold</FooterLink>
-                        <FooterLink href="#">Sheryl Deakin</FooterLink>
-                        <FooterLink href="#">Jessica Luo</FooterLink>
-                    </Column>
-                    <Column>
-                        <Heading>Social Media</Heading>
-                        <FooterLink href="#">
-                            <i className="fab fa-facebook-f"/>
-                            <span style={{marginLeft: "10px"}}>
-				Facebook
-				</span>
+        <div className="footer pl-4 pl-5">
+            <div className={"wd-centered"}>
+                <div className={"row"}>
+                    <div className={"col-2"}></div>
+                    <div className={"col"}>
+                        <h5>About Us</h5>
+                        <ListGroup>
+                            <ListGroupItem action tag="a" className={"bg-dark"} href="/privacy">
+                                <span className={"wd-font-white"}>Privacy Policy</span>
+                            </ListGroupItem>
+                        </ListGroup>
+                    </div>
+                    <div className={"col"}>
+                        <h5>Meet the Team</h5>
+                        <ListGroup>
+                            <ListGroupItem action tag="button" className={"bg-dark"}>
+                                <span className={"wd-font-white"}>Chloe Strandwold</span>
+                            </ListGroupItem>
+                            <ListGroupItem action tag="button" className={"bg-dark"}>
+                                <span className={"wd-font-white"}>Sheryl Deakin</span>
+                            </ListGroupItem>
+                            <ListGroupItem action tag="button" className={"bg-dark"}>
+                                <span className={"wd-font-white"}>Jessica Luo</span>
+                            </ListGroupItem>
+                        </ListGroup>
+                    </div>
+                    <div className={"col-2"}></div>
+                </div>
+            </div>
 
-                        </FooterLink>
-                        <FooterLink href="#">
-                            <i className="fab fa-instagram"/>
-                            <span style={{marginLeft: "10px"}}>
-				Instagram
-				</span>
-
-                        </FooterLink>
-                        <FooterLink href="#">
-                            <i className="fab fa-twitter"/>
-                            <span style={{marginLeft: "10px"}}>
-				Twitter
-				</span>
-
-                        </FooterLink>
-                        <FooterLink href="#">
-                            <i className="fab fa-youtube"/>
-                            <span style={{marginLeft: "10px"}}>
-				Youtube
-				</span>
-
-                        </FooterLink>
-                    </Column>
-                </Row>
-            </Container>
-        </Box>
+        </div>
     );
 };
 export default Footer;

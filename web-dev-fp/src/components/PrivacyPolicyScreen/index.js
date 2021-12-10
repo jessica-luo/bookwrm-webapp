@@ -6,7 +6,9 @@ const PrivacyPolicyScreen = () => {
     return (
         <>
             <NavigationComponent activeLink={'/privacy'}/>
-            <h1>Privacy Policy Screen</h1>
+            <div className={'page-content'}>
+
+            </div>
             <Footer/>
         </>
     )

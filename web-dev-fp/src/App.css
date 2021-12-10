@@ -47,6 +47,24 @@ body {
   color: white
 }
 
+.footer{
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: black;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.wd-font-white {
+  color: white
+}
+
+.page-content {
+  position: relative;
+  min-height: 100vh;
+}
+
 
 @keyframes App-logo-spin {
   from {

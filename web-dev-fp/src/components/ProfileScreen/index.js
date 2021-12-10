@@ -25,18 +25,9 @@ export default class ProfileScreen extends React.Component {
                 <div className={"container main-container bg-none"}>
 
                 </div>
+                <Footer/>
             </>
         )
     }
 };
-const ProfileScreen = () => {
-    return (
-        <>
-            <NavigationComponent activeLink={'/profile'}/>
-            <h1>Profile Screen</h1>
-            <Footer/>
-        </>
-    )
-};
 
-export default ProfileScreen;

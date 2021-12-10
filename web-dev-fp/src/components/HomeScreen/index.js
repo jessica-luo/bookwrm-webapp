@@ -2,6 +2,8 @@ import NavigationComponent from "../NavigationComponent";
 import BookListItem from "./BookListItem";
 import featuredbooks from "./featuredbooks";
 import trendingbooks from "./trendingbooks";
+import Footer from "../FooterComponent";
+
 
 
 const HomeScreen = () => {
@@ -49,6 +51,7 @@ const HomeScreen = () => {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </>
     )
 };
