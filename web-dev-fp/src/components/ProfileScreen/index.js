@@ -1,5 +1,6 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
+import Footer from "../FooterComponent";
 
 export default class ProfileScreen extends React.Component {
 
@@ -28,3 +29,14 @@ export default class ProfileScreen extends React.Component {
         )
     }
 };
+const ProfileScreen = () => {
+    return (
+        <>
+            <NavigationComponent activeLink={'/profile'}/>
+            <h1>Profile Screen</h1>
+            <Footer/>
+        </>
+    )
+};
+
+export default ProfileScreen;
