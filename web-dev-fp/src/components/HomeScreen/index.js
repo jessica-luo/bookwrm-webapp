@@ -10,7 +10,6 @@ const HomeScreen = () => {
     return (
         <>
             <NavigationComponent activeLink={'/home'}/>
-            <h1>Home Screen</h1>
             <h1 className="text-center mt-5 text-success font-weight-bold">BookWrm <i className={"fas fa-book"}/></h1>
             <p className="text-center">/ˈbo͝okˌwərm/</p>
             <p className="text-center"> 1. a person unusually devoted to reading and study</p>

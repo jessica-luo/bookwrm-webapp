@@ -11,6 +11,7 @@ import SearchScreen from "./components/SearchScreen";
 import {BrowserRouter, Route} from "react-router-dom";
 import RegisterScreen from "./components/RegisterScreen";
 
+
 function App() {
     return (
         <BrowserRouter>

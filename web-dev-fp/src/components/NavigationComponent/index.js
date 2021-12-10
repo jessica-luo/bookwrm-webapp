@@ -36,7 +36,7 @@ export default class NavigationComponent extends React.Component {
     render() {
         return (
             <>
-                <Navbar className={styles.wdnav} dark expand="md" fixed="top">
+                <Navbar className={styles.wdnav} dark expand="md">
                     <NavbarBrand href="/">BookWrm <i className={"fas fa-book"}/> </NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
