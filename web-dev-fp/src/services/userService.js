@@ -37,7 +37,7 @@ export const loginUser = (user) =>
         .then(response => response.json());
 
 export const findUserByUsername = (username) =>
-    fetch(`${URL}/${username}`)
+    fetch(`${URL}/username/${username}`)
         .then(response => response.json());
 
 export const addToRead = (user, isbn) =>

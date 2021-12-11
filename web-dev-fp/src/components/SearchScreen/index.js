@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useLayoutEffect} from "react";
 
 import {Link, useParams } from "react-router-dom";
 
@@ -6,9 +6,19 @@ import NavigationComponent from "../NavigationComponent";
 import DetailsScreen from "../DetailsScreen";
 
 import Footer from "../FooterComponent";
+import loginStore from "../../store/login";
 
 
 const SearchScreen = () => {
+    const [loginState, setLoginState] = useState(loginStore.initialState)
+
+    useLayoutEffect(() => {
+        loginStore.subscribe(setLoginState);
+        loginStore.init();
+    }, []);
+
+    const loggedIn = loginState.username !== ''
+
     const params = useParams();
     const bookTitle = params.searchTerm || 'batman';
     const [searchTerm, setSearchTerm] = useState(bookTitle);
@@ -31,7 +41,7 @@ const SearchScreen = () => {
     useEffect(findBooks, []);
     return (
         <>
-            <NavigationComponent activeLink={'/search'}/>
+            <NavigationComponent activeLink={'/search'} loggedIn={loggedIn}/>
             <br/><br/><br/>
             <div className="container">
                 <h1>Search Screen</h1>

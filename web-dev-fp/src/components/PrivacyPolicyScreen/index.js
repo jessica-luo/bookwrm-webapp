@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useState, useLayoutEffect} from "react";
 import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
+import loginStore from "../../store/login";
 
 const PrivacyPolicyScreen = () => {
+    const [loginState, setLoginState] = useState(loginStore.initialState)
+
+    useLayoutEffect(() => {
+        loginStore.subscribe(setLoginState);
+        loginStore.init();
+    }, []);
+
+    const loggedIn = loginState.username !== ''
     return (
         <>
 
-            <NavigationComponent activeLink={'/privacy'}/>
+            <NavigationComponent activeLink={'/privacy'} loggedIn={loggedIn}/>
             <div className={'page-content container mt-5 p-4 border rounded'}>
                 <h2 className={"text-success"}>Privacy policy</h2>
                 <h6>Last updated: December 10, 2021</h6>

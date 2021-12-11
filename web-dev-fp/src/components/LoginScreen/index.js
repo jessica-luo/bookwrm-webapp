@@ -3,42 +3,52 @@ import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
 import {Link, useHistory} from "react-router-dom";
 import authorService from "../../services/authorService";
-import {useState} from "react";
+import {useState, useLayoutEffect} from "react";
 import userService from "../../services/userService";
+import loginStore from "../../store/login";
 
-const LoginScreen = ({setLoginUser}) => {
+const LoginScreen = () => {
 
     const history = useHistory();
     const [user, setUser] = useState({username: '', password: ''})
+    const [loginState, setLoginState] = useState(loginStore.initialState)
+
+    useLayoutEffect(() => {
+        loginStore.subscribe(setLoginState);
+        loginStore.init();
+    }, []);
 
     const loginUser = (user) =>
         userService.loginUser(user)
             .then(state => {
                 if (state.message === "Login success") {
-                    {setLoginUser(state.user)}
-                    {alert(state.message)}
+                    loginStore.login(state.user.username)
+                    {
+                        alert(state.message)
+                    }
                     history.push('/')
                 } else {
                     alert(state.message)
                 }
             })
+
 
     const loginAuthor = (user) =>
         authorService.loginAuthor(user)
             .then(state => {
                 if (state.message === "Login success") {
-                    setLoginUser(state.user)
+                    loginStore.login(state.user.username)
                     alert(state.message)
                     history.push('/')
                 } else {
                     alert(state.message)
                 }
+
             })
 
     return (
         <>
             <NavigationComponent activeLink={'/login'}/>
-
             <div className={"container main-container bg-none"}>
                 <h1 className={"mt-5"}>Login</h1>
                 <input value={user.username}
@@ -71,6 +81,6 @@ const LoginScreen = ({setLoginUser}) => {
             <Footer/>
         </>
     )
-};
+}
 
 export default LoginScreen;
