@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 
 import {Link, useParams } from "react-router-dom";
 
@@ -10,7 +10,6 @@ import Footer from "../FooterComponent";
 
 const SearchScreen = () => {
     const params = useParams();
-    // let navigate = useNavigate();
     const bookTitle = params.searchTerm || 'batman';
     const [searchTerm, setSearchTerm] = useState(bookTitle);
     const [books, setBooks] = useState([]);
@@ -26,6 +25,8 @@ const SearchScreen = () => {
             setBooks(d.docs)
         }).then(results => console.log(books)).catch(e => console.log("error", e))
     }
+
+    console.log("params", params)
 
     useEffect(findBooks, []);
     return (
@@ -96,47 +97,37 @@ const SearchScreen = () => {
                                         className="btn btn-success float-end ms-2">
                                         Add
                                     </button>
-                                    <Link to={"/details"}>
-                                        <button
-                                            onClick={() => DetailsScreen(book)}
-                                            className="btn btn-warning float-end ms-2">
-                                            Details
-                                        </button>
-                                    </Link>
-                                    <table>
+                                    <table style={{width: "100%"}}>
                                         <tbody>
                                         <tr>
                                             <td className="align-text-top">
                                                 <h4>{book.title}</h4>
                                             </td>
-                                            <td>
-                                                Image
-                                            </td>
-                                            <td>
-
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Author: {book.author_name}</td>
                                             <td>Date Published: {book.first_publish_year}</td>
-                                            <td>ISBN: </td>
-                                                {
-                                                    book.isbn && book.isbn.map(bookisbn =>
+                                        </tr>
+                                        <tr>
+                                            <tr>ISBN: </tr>
+                                            {
+                                                book.isbn && book.isbn.map(bookisbn =>
                                                     <tr>
                                                         <td>
-                                                            {bookisbn.toString()}
+                                                            {bookisbn}
                                                         </td>
                                                         <td>
-                                                            <Link to={`/details/${bookisbn}`}>
+                                                            <a href={`/details/${bookisbn}`}>
                                                                 <button
-                                                                    onClick={() => DetailsScreen(book)}
+                                                                    onClick={() => DetailsScreen(bookisbn)}
                                                                     className="btn btn-warning float-end ms-2">
                                                                     Details
                                                                 </button>
-                                                            </Link>
+                                                            </a>
+
                                                         </td>
                                                     </tr>
-                                            )}
+                                                )}
                                         </tr>
                                         </tbody>
                                     </table>
