@@ -1,12 +1,13 @@
 import NavigationComponent from "../NavigationComponent";
-import BookListItem from "./BookListItem";
+import BookListItem from "../BookList/BookListItem";
 import featuredbooks from "./featuredbooks";
 import trendingbooks from "./trendingbooks";
 import Footer from "../FooterComponent";
-
-
+import BookList from "../BookList";
 
 const HomeScreen = () => {
+    const loggedIn = false;
+
     return (
         <>
             <NavigationComponent activeLink={'/home'}/>
@@ -16,37 +17,40 @@ const HomeScreen = () => {
             <div className={"container main-container bg-none mt-5"}>
                 <div className="container">
                     <div className="row p-4 border rounded">
-                        <div className="col text-success"> <h2>Featured</h2></div>
-                        <div className="col text-success"> <h2>Trending</h2></div>
+                        <div className="col text-success"><h2>Featured</h2></div>
+                        <div className="col text-success"><h2>Trending</h2></div>
                         <div className="w-100"></div>
                         <div className="col text-secondary">
-                            <ul className="list-group">
-                                {
-                                    featuredbooks.map(book =>
-                                        <BookListItem book={book}/>
-                                    )
-                                }
-                            </ul>
+                           <BookList list={featuredbooks}/>
                         </div>
                         <div className="col text-secondary">
-                            <ul className="list-group">
-                                {
-                                    trendingbooks.map(book =>
-                                        <BookListItem book={book}/>
-                                    )
-                                }
-                            </ul>
+                            <BookList list={trendingbooks}/>
                         </div>
                     </div>
                 </div>
 
                 <div className="container mt-5 mb-5">
                     <div className="row p-4 border rounded">
-                        <div className="col text-success"> <h2>Your To-Read List</h2></div>
-                        <div className="col text-success"> <h2>Revisit: Books You've Recently Finished</h2></div>
+                        <div className="col text-success"><h2>Your To-Read List</h2></div>
+                        <div className="col text-success"><h2>Revisit: Books You've Recently Finished</h2></div>
                         <div className="w-100"></div>
-                        <div className="col text-secondary">Books (when logged in?)</div>
-                        <div className="col text-secondary">Books (when logged in?)</div>
+                        <div className="col text-secondary">
+                            <div hidden={loggedIn}>
+                                Log in <a href={"/login"}>here</a> to add to your list!
+                            </div>
+                            <div hidden={!loggedIn}>
+
+                            </div>
+
+                        </div>
+                        <div className="col text-secondary">
+                            <div hidden={loggedIn}>
+                                Log in <a href={"/login"}>here</a> to add to your list!
+                            </div>
+                            <div hidden={!loggedIn}>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

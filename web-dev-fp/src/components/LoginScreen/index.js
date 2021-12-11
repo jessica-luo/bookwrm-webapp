@@ -1,28 +1,39 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
-import {loginUser as login}  from "../../services/userService";
-import {Link, useHistory} from "react-router-dom";
-import authorService, {loginAuthor} from "../../services/authorService";
-import axios from 'axios';
-import {useState} from "react";
+import {Link} from "react-router-dom";
+import authorService from "../../services/authorService";
+import {useState, useLayoutEffect} from "react";
 import userService from "../../services/userService";
+import loginStore from "../../store/login";
 
-const LoginScreen = ({setLoginUser}) => {
+const LoginScreen = () => {
 
     const [user, setUser] = useState({username: '', password: ''})
+    const [loginState, setLoginState] = useState(loginStore.initialState)
+
+    useLayoutEffect(()=> {
+        loginStore.subscribe(setLoginState);
+        loginStore.init();
+    },[]);
 
     const loginUser = (user) =>
         userService.loginUser(user)
-             .then(state => {setLoginUser(state.user)})
+             .then(state => {
+                 loginStore.login(state.user.username)
+                 console.log(loginState)
+             })
 
     const loginAuthor = (user) =>
         authorService.loginAuthor(user)
-            .then(state => setLoginUser(state.user))
+            .then(state => {
+                loginStore.login(state.user.username)
+            })
 
         return (
             <>
                 <NavigationComponent activeLink={'/login'}/>
+
 
                 <div className={"container main-container bg-none"}>
                     <h1 className={"mt-5"}>Login</h1>
