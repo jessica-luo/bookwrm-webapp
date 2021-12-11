@@ -5,7 +5,6 @@ import trendingbooks from "./trendingbooks";
 import Footer from "../FooterComponent";
 
 
-
 const HomeScreen = () => {
     return (
         <>
@@ -16,11 +15,10 @@ const HomeScreen = () => {
             <div className={"container main-container bg-none mt-5"}>
                 <div className="container">
                     <div className="row p-4 border rounded">
-                        <div className="col text-success"> <h2>Featured</h2></div>
-                        <div className="col text-success"> <h2>Trending</h2></div>
-                        <div className="w-100"></div>
+
                         <div className="col text-secondary">
                             <ul className="list-group">
+                                <h2 className="text-success">Featured</h2>
                                 {
                                     featuredbooks.map(book =>
                                         <BookListItem book={book}/>
@@ -28,8 +26,10 @@ const HomeScreen = () => {
                                 }
                             </ul>
                         </div>
+
                         <div className="col text-secondary">
                             <ul className="list-group">
+                                <h2 className="text-success">Trending</h2>
                                 {
                                     trendingbooks.map(book =>
                                         <BookListItem book={book}/>
@@ -42,11 +42,14 @@ const HomeScreen = () => {
 
                 <div className="container mt-5 mb-5">
                     <div className="row p-4 border rounded">
-                        <div className="col text-success"> <h2>Your To-Read List</h2></div>
-                        <div className="col text-success"> <h2>Revisit: Books You've Recently Finished</h2></div>
-                        <div className="w-100"></div>
-                        <div className="col text-secondary">Books (when logged in?)</div>
-                        <div className="col text-secondary">Books (when logged in?)</div>
+                        <div className="col text-secondary">
+                            <h2 className="text-success">Your To-Read List</h2>
+                            Books (when logged in?)
+                        </div>
+                        <div className="col text-secondary">
+                            <h2 className="text-success" >Revisit: Books You've Recently Finished</h2>
+                            Books (when logged in?)
+                        </div>
                     </div>
                 </div>
             </div>
