@@ -39,20 +39,46 @@ const HomeScreen = () => {
             <div className={"container main-container bg-none mt-5"}>
                 <div className="container">
                     <div className="row p-4 border rounded">
+<<<<<<< HEAD
                         <div className="col text-success"><h2>Featured</h2></div>
                         <div className="col text-success"><h2>Trending</h2></div>
                         <div className="w-100"></div>
                         <div className="col text-secondary">
                            <BookList list={featuredbooks}/>
-                        </div>
+=======
+
                         <div className="col text-secondary">
+                            <ul className="list-group">
+                                <h2 className="text-success">Featured</h2>
+                                {
+                                    featuredbooks.map(book =>
+                                        <BookListItem book={book}/>
+                                    )
+                                }
+                            </ul>
+>>>>>>> b0aa4069331c57a7a86f0837886a68ed9d09c711
+                        </div>
+
+                        <div className="col text-secondary">
+<<<<<<< HEAD
                             <BookList list={trendingbooks}/>
+=======
+                            <ul className="list-group">
+                                <h2 className="text-success">Trending</h2>
+                                {
+                                    trendingbooks.map(book =>
+                                        <BookListItem book={book}/>
+                                    )
+                                }
+                            </ul>
+>>>>>>> b0aa4069331c57a7a86f0837886a68ed9d09c711
                         </div>
                     </div>
                 </div>
 
                 <div className="container mt-5 mb-5">
                     <div className="row p-4 border rounded">
+<<<<<<< HEAD
                         <div className="col text-success"><h2>Your To-Read List</h2></div>
                         <div className="col text-success"><h2>Revisit: Books You've Recently Finished</h2></div>
                         <div className="w-100"></div>
@@ -72,6 +98,15 @@ const HomeScreen = () => {
                             <div hidden={!loggedIn}>
 
                             </div>
+=======
+                        <div className="col text-secondary">
+                            <h2 className="text-success">Your To-Read List</h2>
+                            Books (when logged in?)
+                        </div>
+                        <div className="col text-secondary">
+                            <h2 className="text-success" >Revisit: Books You've Recently Finished</h2>
+                            Books (when logged in?)
+>>>>>>> b0aa4069331c57a7a86f0837886a68ed9d09c711
                         </div>
                     </div>
                 </div>
