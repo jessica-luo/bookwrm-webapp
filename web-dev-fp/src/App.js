@@ -19,6 +19,7 @@ function App() {
             <Route path={["/", "/home"]} exact={true}> <HomeScreen/> </Route>
             <Route path={["/search"]} exact={true} component={SearchScreen}/>
             <Route path={["/details"]} exact={true} component={DetailsScreen}/>
+            <Route path={["/details/:id"]} exact={true} component={DetailsScreen}/>
             <Route path={["/profile"]} exact={true} component={ProfileScreen}/>
             <Route path={["/login"]} exact={true}><LoginScreen/></Route>
             <Route path={["/privacy"]} exact={true} component={PrivacyPolicyScreen}/>
