@@ -5,6 +5,9 @@ import {Link, useParams } from "react-router-dom";
 import NavigationComponent from "../NavigationComponent";
 import DetailsScreen from "../DetailsScreen";
 
+import Footer from "../FooterComponent";
+
+
 const SearchScreen = () => {
     const params = useParams();
     // let navigate = useNavigate();
@@ -142,6 +145,8 @@ const SearchScreen = () => {
                         }
                 </ul>
             </div>
+            <h1>Search Screen</h1>
+            <Footer/>
         </>
     )
 };

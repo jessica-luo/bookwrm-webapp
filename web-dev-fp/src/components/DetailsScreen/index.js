@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import NavigationComponent from "../NavigationComponent";
 import {Link, useParams} from "react-router-dom";
+import Footer from "../FooterComponent";
+
 
 const DetailsScreen = () => {
     const params = useParams();
@@ -30,7 +32,6 @@ const DetailsScreen = () => {
             <br/><br/><br/>
             <div className="container">
                 <h1>Details Screen</h1>
-                <></>
                 {/*<li key={book.details._id}*/}
                 {/*    className="list-group-item">*/}
                 {/*    <button*/}
@@ -59,8 +60,8 @@ const DetailsScreen = () => {
                 {/*    </table>*/}
                 {/*</li>*/}
             </div>
-
-
+            <h1>Details Screen</h1>
+            <Footer/>
         </>
     )
 };

@@ -35,8 +35,8 @@ export default class NavigationComponent extends React.Component {
 
     render() {
         return (
-            <div>
-                <Navbar className={styles.wdnav} dark expand="md" fixed="top">
+            <>
+                <Navbar className={styles.wdnav} dark expand="md">
                     <NavbarBrand href="/">BookWrm <i className={"fas fa-book"}/> </NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
@@ -57,7 +57,7 @@ export default class NavigationComponent extends React.Component {
 
                     </Collapse>
                 </Navbar>
-            </div>
+            </>
         );
     }
 }
