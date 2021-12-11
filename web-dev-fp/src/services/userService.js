@@ -94,10 +94,19 @@ export const deleteCurrentlyReading = (user, isbn) =>
         }
     }).then(response => response.json());
 
+export const updateUser = (user) =>
+    fetch(`${URL}/${user._id}`, {
+        method: 'PUT',
+        body: JSON.stringify(user),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(response => response.json());
+
 
 export default {
     findAllUsers, deleteUser, createUser, findUserByUsername,
     deleteCurrentlyReading, deleteRead, deleteToRead,
-    addCurrentlyReading, addToRead, addRead, loginUser, registerUser
+    addCurrentlyReading, addToRead, addRead, loginUser, registerUser, updateUser
 };
 
