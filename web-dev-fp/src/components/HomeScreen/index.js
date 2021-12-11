@@ -5,7 +5,6 @@ import trendingbooks from "./trendingbooks";
 import Footer from "../FooterComponent";
 import BookList from "../BookList";
 import loginStore from "../../store/login";
-import {Link, useHistory} from "react-router-dom";
 import {useState, useLayoutEffect} from "react";
 import userService from "../../services/userService";
 
@@ -43,14 +42,12 @@ const HomeScreen = () => {
                             <h2 className="text-success">Featured</h2>
                            <BookList list={featuredbooks}/>
                         </div>
-
                         <div className="col text-secondary">
                             <h2 className="text-success">Trending</h2>
                             <BookList list={trendingbooks}/>
                         </div>
                     </div>
                 </div>
-
                 <div className="container mt-5 mb-5">
                     <div className="row p-4 border rounded">
                         <div className="col text-success"><h2>Your To-Read List</h2></div>
@@ -61,16 +58,13 @@ const HomeScreen = () => {
                                 Log in <a href={"/login"}>here</a> to add to your list!
                             </div>
                             <div hidden={!loggedIn}>
-
                             </div>
-
                         </div>
                         <div className="col text-secondary">
                             <div hidden={loggedIn}>
                                 Log in <a href={"/login"}>here</a> to add to your list!
                             </div>
                             <div hidden={!loggedIn}>
-
                             </div>
                         </div>
                     </div>
