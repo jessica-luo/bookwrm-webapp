@@ -23,7 +23,6 @@ const LoginScreen = () => {
             .then(state => {
                 if (state.message === "Login success") {
                     loginStore.login(state.user.username)
-                    console.log(loginState)
                     {
                         alert(state.message)
                     }

@@ -4,13 +4,35 @@ import featuredbooks from "./featuredbooks";
 import trendingbooks from "./trendingbooks";
 import Footer from "../FooterComponent";
 import BookList from "../BookList";
+import loginStore from "../../store/login";
+import {Link, useHistory} from "react-router-dom";
+import {useState, useLayoutEffect} from "react";
+import userService from "../../services/userService";
 
 const HomeScreen = () => {
-    const loggedIn = false;
+    const [loginState, setLoginState] = useState(loginStore.initialState)
+
+    useLayoutEffect(() => {
+        loginStore.subscribe(setLoginState);
+        loginStore.init();
+    }, []);
+
+    const loggedIn = loginState.username !== ''
+
+    let toReadList
+    let recentlyRead
+    let userDetails
+    if (loggedIn) {
+        userService.findUserByUsername(loginState.username).then(user => {
+            console.log(user)
+            userDetails = user
+            console.log(userDetails)
+        })
+    }
 
     return (
         <>
-            <NavigationComponent activeLink={'/home'}/>
+            <NavigationComponent activeLink={'/home'} loggedIn={loggedIn}/>
             <h1 className="text-center mt-5 text-success font-weight-bold">BookWrm <i className={"fas fa-book"}/></h1>
             <p className="text-center">/ˈbo͝okˌwərm/</p>
             <p className="text-center"> 1. a person unusually devoted to reading and study</p>

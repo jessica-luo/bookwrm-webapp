@@ -1,12 +1,22 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import NavigationComponent from "../NavigationComponent";
 import {Link, useParams} from "react-router-dom";
 import Footer from "../FooterComponent";
 
 import {findBookByISBNAPI} from "../../services/detailsService";
+import loginStore from "../../store/login";
 
 
 const DetailsScreen = () => {
+    const [loginState, setLoginState] = useState(loginStore.initialState)
+
+    useLayoutEffect(() => {
+        loginStore.subscribe(setLoginState);
+        loginStore.init();
+    }, []);
+
+    const loggedIn = loginState.username !== ''
+
     let { id } = useParams();
     const isbn = id || '9780980200447';
     const [book, setBook] = useState([isbn]);
@@ -26,7 +36,7 @@ const DetailsScreen = () => {
     useEffect(getBookDetails, []);
     return (
         <>
-            <NavigationComponent activeLink={'/details/'}/>
+            <NavigationComponent activeLink={'/details/'} loggedIn={loggedIn}/>
             <br/><br/><br/>
             <div className="container">
                 <h1>Details Screen</h1>

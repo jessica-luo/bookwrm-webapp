@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useState, useLayoutEffect} from "react";
 import {Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Nav, NavLink} from "reactstrap";
 import styles from "./nav-bar.module.css";
+import loginStore from "../../store/login";
 
 const links = [
     {href: '/home', text: 'Home'},
     {href: '/search', text: 'Search'},
-    {href: '/profile', text: 'Profile'},
 ];
 
 
@@ -15,7 +15,8 @@ export default class NavigationComponent extends React.Component {
 
         this.state = {
             isOpen: false,
-            activeLink: props.activeLink
+            activeLink: props.activeLink,
+            loggedIn: props.loggedIn
         };
 
         this.toggle = this.toggle.bind(this);
@@ -33,6 +34,8 @@ export default class NavigationComponent extends React.Component {
         });
     }
 
+
+
     render() {
         return (
             <>
@@ -43,14 +46,16 @@ export default class NavigationComponent extends React.Component {
                         <Nav className="ml-auto" navbar>
                             {links.map(this.createNavItem)}
                             <NavItem>
-                                <NavLink href='/login' className={"d-md-none"}>Login</NavLink>
+                                <NavLink href={!this.state.loggedIn? "/login": "/profile"}
+                                         className={"d-md-none"}>{!this.state.loggedIn? "Login": "Your Profile"}
+                                </NavLink>
                             </NavItem>
                         </Nav>
                         <Nav className="position-absolute end-0 d-none d-md-block" navbar>
                             <NavItem>
-                                <NavLink href='/login'
+                                <NavLink href={!this.state.loggedIn? "/login": "/profile"}
                                          className={'/login' === this.state.activeLink ? 'active' : ''}>
-                                    Login
+                                    {!this.state.loggedIn? "Login": <i className={"fa fa-user"}/> }
                                 </NavLink>
                             </NavItem>
                         </Nav>
@@ -61,4 +66,3 @@ export default class NavigationComponent extends React.Component {
         );
     }
 }
-

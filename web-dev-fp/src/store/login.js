@@ -10,11 +10,10 @@ let state = initialState
 
 const loginStore = {
     init: () => {
-        state = {...state, username: ''}
+        state = {...state, username: state.username}
         subject.next(state)
     },
     subscribe: setState => {
-        console.log(setState)
         subject.subscribe(setState)
     },
     login: username => {
@@ -22,8 +21,7 @@ const loginStore = {
             ...state,
             username: username
         };
-        subject.next(state);
-        console.log(state);
+        subject.next(state)
     },
     logout: () => {
         state = initialState;

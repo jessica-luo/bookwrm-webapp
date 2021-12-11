@@ -1,9 +1,19 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
-import {useState} from "react";
+import {useState, useLayoutEffect} from "react";
+import loginStore from "../../store/login";
 
 const ProfileScreen = () => {
+    const [loginState, setLoginState] = useState(loginStore.initialState)
+
+    useLayoutEffect(() => {
+        loginStore.subscribe(setLoginState);
+        loginStore.init();
+    }, []);
+
+    const loggedInUser = loginState.username
+    const loggedIn = loginState.username !== ''
 
     const [user, setUser] = useState({
         username: '',
@@ -19,7 +29,7 @@ const ProfileScreen = () => {
     {
         return (
             <>
-                <NavigationComponent activeLink={'/login'}/>
+                <NavigationComponent activeLink={'/login'} loggedIn={loggedIn}/>
 
                 <div className={"container main-container bg-none"}>
 

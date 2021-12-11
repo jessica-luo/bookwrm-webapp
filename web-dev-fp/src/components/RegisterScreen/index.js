@@ -1,11 +1,20 @@
-import React, {useState} from "react";
+import React, {useLayoutEffect, useState} from "react";
 import NavigationComponent from "../NavigationComponent";
 import userService from "../../services/userService";
 import authorService from "../../services/authorService";
 import {useHistory} from "react-router-dom";
 import Footer from "../FooterComponent";
+import loginStore from "../../store/login";
 
 const RegisterScreen = () => {
+    const [loginState, setLoginState] = useState(loginStore.initialState)
+
+    useLayoutEffect(() => {
+        loginStore.subscribe(setLoginState);
+        loginStore.init();
+    }, []);
+
+    const loggedIn = loginState.username !== ''
 
     const history = useHistory();
     const [user, setUser] = useState({
