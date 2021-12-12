@@ -3,23 +3,25 @@ import {Subject} from 'rxjs';
 const subject = new Subject();
 
 const initialState = {
-    username: ''
+    username: '',
+    type: ''
 };
 
 let state = initialState
 
 const loginStore = {
     init: () => {
-        state = {...state, username: state.username}
+        state = {...state, username: state.username, type: state.type}
         subject.next(state)
     },
     subscribe: setState => {
         subject.subscribe(setState)
     },
-    login: username => {
+    login: user => {
         state = {
             ...state,
-            username: username
+            username: user.username,
+            type: user.types
         };
         subject.next(state)
     },
