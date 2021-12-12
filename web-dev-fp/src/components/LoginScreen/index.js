@@ -22,7 +22,7 @@ const LoginScreen = () => {
         userService.loginUser(user)
             .then(state => {
                 if (state.message === "Login success") {
-                    loginStore.login(state.user.username)
+                    loginStore.login({username: state.user.username, type: 'user'})
                     {
                         alert(state.message)
                     }
@@ -37,7 +37,7 @@ const LoginScreen = () => {
         authorService.loginAuthor(user)
             .then(state => {
                 if (state.message === "Login success") {
-                    loginStore.login(state.user.username)
+                    loginStore.login({username: state.user.username, type: 'author'})
                     alert(state.message)
                     history.push('/profile')
                 } else {
