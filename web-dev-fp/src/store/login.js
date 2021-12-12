@@ -21,7 +21,7 @@ const loginStore = {
         state = {
             ...state,
             username: user.username,
-            type: user.types
+            type: user.type
         };
         subject.next(state)
     },
