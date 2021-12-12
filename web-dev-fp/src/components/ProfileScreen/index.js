@@ -4,6 +4,7 @@ import Footer from "../FooterComponent";
 import {useState, useLayoutEffect} from "react";
 import loginStore from "../../store/login";
 import {findUserByUsername, updateUser} from "../../services/userService";
+import {findAuthorByUsername, updateAuthor} from "../../services/authorService";
 
 const ProfileScreen = () => {
     const [loginState, setLoginState] = useState(loginStore.initialState)
@@ -15,6 +16,7 @@ const ProfileScreen = () => {
 
     const loggedInUser = loginState.username
     const loggedIn = loginState.username !== ''
+    const isAuthor = loginState.type === 'author'
 
     const [user, setUser] = useState({
         username: '',
@@ -33,8 +35,23 @@ const ProfileScreen = () => {
     })
 
     let userDetails
-    if (loggedIn) {
+    if (loggedIn && !isAuthor) {
         findUserByUsername(loginState.username).then(user => {
+            //console.log(user)
+            userDetails = user
+            setUserLog({
+                ...user,
+                username: userDetails.username,
+                password: userDetails.password,
+                email: userDetails.email,
+                firstName: userDetails.firstName,
+                lastName: userDetails.lastName
+            })
+            //console.log(userDetails)
+        })
+    }
+    if (loggedIn && isAuthor) {
+        findAuthorByUsername(loginState.username).then(user => {
             //console.log(user)
             userDetails = user
             setUserLog({
@@ -50,12 +67,12 @@ const ProfileScreen = () => {
     }
 
     const edit = (user) =>
-        //updateUser(user)
-        console.log(loginState)
-        // authorService.updateAuthor(user)
-        //     .then(state => {
-        //         console.log(state)
-        //     })
+        (isAuthor ? updateAuthor(user) : updateUser(user))
+    //console.log(loginState)
+    // authorService.updateAuthor(user)
+    //     .then(state => {
+    //         console.log(state)
+    //     })
 
     {
         return (
