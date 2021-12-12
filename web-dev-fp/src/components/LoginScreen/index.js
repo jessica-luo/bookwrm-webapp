@@ -26,7 +26,7 @@ const LoginScreen = () => {
                     {
                         alert(state.message)
                     }
-                    history.push('/')
+                    history.push('/profile')
                 } else {
                     alert(state.message)
                 }
@@ -39,7 +39,7 @@ const LoginScreen = () => {
                 if (state.message === "Login success") {
                     loginStore.login(state.user.username)
                     alert(state.message)
-                    history.push('/')
+                    history.push('/profile')
                 } else {
                     alert(state.message)
                 }
