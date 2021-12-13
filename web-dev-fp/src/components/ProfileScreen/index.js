@@ -1,22 +1,33 @@
-import React from "react";
+import React, {useEffect} from "react";
 import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
 import {useState, useLayoutEffect} from "react";
 import loginStore from "../../store/login";
-import {findUserByUsername, updateUser} from "../../services/userService";
-import {findAuthorByUsername, updateAuthor} from "../../services/authorService";
+import userService, {findUserByUsername, updateUser} from "../../services/userService";
+import authorService, {findAuthorByUsername, updateAuthor} from "../../services/authorService";
+
+//const selectProfile = (state) => state.profile;
 
 const ProfileScreen = () => {
     const [loginState, setLoginState] = useState(loginStore.initialState)
-
     useLayoutEffect(() => {
         loginStore.subscribe(setLoginState);
         loginStore.init();
     }, []);
+    console.log(loginState)
 
     const loggedInUser = loginState.username
     const loggedIn = loginState.username !== ''
     const isAuthor = loginState.type === 'author'
+
+    // let userDetails
+    // if (loggedIn) {
+    //     userService.findUserByUsername(loginState.username).then(user => {
+    //         console.log(user)
+    //         userDetails = user
+    //         console.log(userDetails)
+    //     })
+    // }
 
     const [user, setUser] = useState({
         username: '',
@@ -26,53 +37,43 @@ const ProfileScreen = () => {
         lastName: ''
     })
 
-    const [userLog, setUserLog] = useState({
-        username: '',
-        password: '',
-        email: '',
-        firstName: '',
-        lastName: ''
-    })
+    useEffect(() => {
+        findUserByUsername()
+    }, [])
 
-    let userDetails
-    if (loggedIn && !isAuthor) {
-        findUserByUsername(loginState.username).then(user => {
-            //console.log(user)
-            userDetails = user
-            setUserLog({
-                ...user,
-                username: userDetails.username,
-                password: userDetails.password,
-                email: userDetails.email,
-                firstName: userDetails.firstName,
-                lastName: userDetails.lastName
-            })
-            //console.log(userDetails)
-        })
-    }
-    if (loggedIn && isAuthor) {
-        findAuthorByUsername(loginState.username).then(user => {
-            //console.log(user)
-            userDetails = user
-            setUserLog({
-                ...user,
-                username: userDetails.username,
-                password: userDetails.password,
-                email: userDetails.email,
-                firstName: userDetails.firstName,
-                lastName: userDetails.lastName
-            })
-            //console.log(userDetails)
-        })
+    function findUserByUsername() {
+        if (!isAuthor) {
+            userService.findUserByUsername(loginState.username)
+                .then(theUser => {
+                    setUser({
+                        username: theUser.username,
+                        password: theUser.password,
+                        email: theUser.email,
+                        firstName: theUser.firstName,
+                        lastName: theUser.lastName
+                    })
+                    // console.log(theUser)
+                    // console.log(user)
+                })
+        } else if (isAuthor) {
+            authorService.findAuthorByUsername(loginState.username)
+                .then(theUser => {
+                    setUser({
+                        username: theUser.username,
+                        password: theUser.password,
+                        email: theUser.email,
+                        firstName: theUser.firstName,
+                        lastName: theUser.lastName
+                    })
+                    // console.log(theUser)
+                    // console.log(user)
+                })
+        }
     }
 
     const edit = (user) =>
+        //console.log(loginState)
         (isAuthor ? updateAuthor(user) : updateUser(user))
-    //console.log(loginState)
-    // authorService.updateAuthor(user)
-    //     .then(state => {
-    //         console.log(state)
-    //     })
 
     {
         return (
@@ -86,14 +87,19 @@ const ProfileScreen = () => {
 
                     <div className="mb-5" hidden={!loggedIn}>
                         <h1 className="mt-5 text-success">Public Profile </h1>
-                        <h4 className="text-primary">{userLog.firstName} {userLog.lastName} @{loggedInUser}</h4>
+                        <h4 className="text-primary">{user.firstName} {user.lastName} @{loggedInUser}</h4>
 
                         <h1 className="mt-5 text-success">Your User Details </h1>
                         Username: {loggedInUser} <br/>
-                        Password: {userLog.password} <br/>
-                        Email: {userLog.email} <br/>
-                        First Name: {userLog.firstName} <br/>
-                        Last Name: {userLog.lastName}
+                        Password: {user.password} <br/>
+                        Email: {user.email} <br/>
+                        First Name: {user.firstName} <br/>
+                        Last Name: {user.lastName} <br/>
+
+                        <button onClick={() => findUserByUsername()}
+                                className={`btn btn-success`}>
+                            Show Profile Details
+                        </button>
 
                         <h2 className="mt-5 text-success">Update Your Profile</h2>
                         <input value={user.username}
@@ -150,8 +156,6 @@ const ProfileScreen = () => {
                                 className={`btn btn-success`}>Update Profile
                         </button>
                     </div>
-
-
                 </div>
                 <Footer/>
             </>
