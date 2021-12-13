@@ -8,13 +8,17 @@ import authorService, {findAuthorByUsername, updateAuthor} from "../../services/
 
 //const selectProfile = (state) => state.profile;
 
-const ProfileScreen = () => {
+const ProfileScreen = (params) => {
+    console.log(params)
+
+    const userProfile = params.match.params.id
+    const privateProfile = params.match.params.authorized === 'private'
+
     const [loginState, setLoginState] = useState(loginStore.initialState)
     useLayoutEffect(() => {
         loginStore.subscribe(setLoginState);
         loginStore.init();
     }, []);
-    console.log(loginState)
 
     const loggedInUser = loginState.username
     const loggedIn = loginState.username !== ''
@@ -41,9 +45,10 @@ const ProfileScreen = () => {
         findUserByUsername()
     }, [])
 
+
     function findUserByUsername() {
         if (!isAuthor) {
-            userService.findUserByUsername(loginState.username)
+            userService.findUserByUsername(userProfile)
                 .then(theUser => {
                     setUser({
                         username: theUser.username,
@@ -56,7 +61,7 @@ const ProfileScreen = () => {
                     // console.log(user)
                 })
         } else if (isAuthor) {
-            authorService.findAuthorByUsername(loginState.username)
+            authorService.findAuthorByUsername(userProfile)
                 .then(theUser => {
                     setUser({
                         username: theUser.username,

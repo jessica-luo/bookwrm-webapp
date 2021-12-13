@@ -26,7 +26,7 @@ const LoginScreen = () => {
                     {
                         alert(state.message)
                     }
-                    history.push('/profile')
+                    history.push('/profile/private/'+ state.user.username)
                 } else {
                     alert(state.message)
                 }

@@ -33,8 +33,7 @@ export const loginUser = (user) =>
         headers: {
             'content-type': 'application/json'
         }
-    })
-        .then(response => response.json());
+    }).then(response => response.json());
 
 export const findUserByUsername = (username) =>
     fetch(`${URL}/username/${username}`)
