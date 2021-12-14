@@ -15,12 +15,6 @@ import { useCookies } from "react-cookie";
 
 
 function App() {
-    const [cookies, setCookie] = useCookies(["user"]);
-    function handleCookie() {
-        setCookie("user", "gowtham", {
-            path: "/"
-        });
-    }
     return (
         <BrowserRouter>
             <Route path={["/", "/home"]} exact={true}> <HomeScreen/> </Route>

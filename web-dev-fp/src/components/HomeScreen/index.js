@@ -25,7 +25,9 @@ const HomeScreen = () => {
     })
 
     useEffect(() => {
-        findUserByUsername()
+        if (cookies.hasOwnProperty('user') && cookies.loggedIn === true) {
+            findUserByUsername()
+        }
     }, [])
 
 

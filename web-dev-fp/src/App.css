@@ -47,6 +47,11 @@ body {
   color: white
 }
 
+.wd-book-pages {
+  font-size: 14px;
+  color: grey;
+}
+
 .footer{
   margin-top: 1rem;
   padding: 1rem;
