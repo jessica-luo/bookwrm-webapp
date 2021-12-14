@@ -2,40 +2,35 @@ import React, {useEffect} from "react";
 import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
 import {useState, useLayoutEffect} from "react";
-import loginStore from "../../store/login";
 import userService, {findUserByUsername, updateUser} from "../../services/userService";
 import authorService, {findAuthorByUsername, updateAuthor} from "../../services/authorService";
+import {useCookies} from "react-cookie";
+import {useHistory} from "react-router-dom";
 
 //const selectProfile = (state) => state.profile;
 
 const ProfileScreen = (params) => {
-    console.log(params)
+    const history = useHistory();
+    const [cookies, setCookie, removeCookie] = useCookies();
 
-    const userProfile = params.match.params.id
-    const privateProfile = params.match.params.authorized === 'private'
+    function clearCookies() {
+        removeCookie("user", {
+            path: "/"
+        });
+        removeCookie("loggedIn", {
+            path: "/"
+        });
+        removeCookie("type", {
+            path: "/"
+        });
+        history.push('/home')
+    }
 
-    const [loginState, setLoginState] = useState(loginStore.initialState)
-    useLayoutEffect(() => {
-        loginStore.subscribe(setLoginState);
-        loginStore.init();
-    }, []);
-
-    const loggedInUser = loginState.username
-    const loggedIn = loginState.username !== ''
-    const isAuthor = loginState.type === 'author'
-
-    // let userDetails
-    // if (loggedIn) {
-    //     userService.findUserByUsername(loginState.username).then(user => {
-    //         console.log(user)
-    //         userDetails = user
-    //         console.log(userDetails)
-    //     })
-    // }
+    const privateProfile = params.match.params.authorized
 
     const [user, setUser] = useState({
         _id: '',
-        username: '',
+        username: cookies.user,
         password: '',
         email: '',
         firstName: '',
@@ -52,8 +47,9 @@ const ProfileScreen = (params) => {
 
 
     function findUserByUsername() {
+        const isAuthor = cookies.type === 'author'
         if (!isAuthor) {
-            userService.findUserByUsername(userProfile)
+            userService.findUserByUsername(cookies.user)
                 .then(theUser => {
                     setUser({
                         _id: theUser._id,
@@ -71,7 +67,7 @@ const ProfileScreen = (params) => {
                     console.log(user)
                 })
         } else if (isAuthor) {
-            authorService.findAuthorByUsername(userProfile)
+            authorService.findAuthorByUsername(cookies.user)
                 .then(theUser => {
                     setUser({
                         username: theUser.username,
@@ -94,24 +90,24 @@ const ProfileScreen = (params) => {
     {
         return (
             <>
-                <NavigationComponent activeLink={`/login/${user.username}`} loggedIn={user.username}/>
+                <NavigationComponent activeLink={`/login/${user.username}`}/>
 
                 <div className={"container main-container bg-none"}>
                     <h1 className="mt-5 text-success">Public Profile </h1>
-                    <h4 className="text-primary">@{loggedInUser}</h4>
+                    <h4 className="text-primary">@{cookies.user}</h4>
 
 
-                    <div className="text-success mt-5 mb-5" hidden={loggedIn}>
+                    <div className="text-success mt-5 mb-5" hidden={cookies.loggedIn}>
                         <h3> Log in <a href={`/login/${user.username}`}>here</a> to view your profile!</h3>
                     </div>
 
                     <div className="mb-5" hidden={!user.username}>
                         <h1 className="mt-5 text-success">Public Profile </h1>
-                        <h4 className="text-primary">{user.firstName} {user.lastName} @{loggedInUser}</h4>
+                        <h4 className="text-primary">{user.firstName} {user.lastName} @{cookies.loggedIn}</h4>
                         <h5>*****put their book lists here*****</h5>
 
                         <h1 className="mt-5 text-success">Your User Details </h1>
-                        Username: {loggedInUser} <br/>
+                        Username: @{cookies.user} <br/>
                         Password: {user.password} <br/>
                         Email: {user.email} <br/>
                         First Name: {user.firstName} <br/>
@@ -176,7 +172,7 @@ const ProfileScreen = (params) => {
                         <button onClick={() => edit(user)}
                                 className={`btn btn-success`}>Update Profile
                         </button>
-                        <div className="mb-5" hidden={!loggedIn}>
+                        <div className="mb-5" hidden={!cookies.loggedIn}>
 
                             <div hidden={!privateProfile}>
                                 <h2 className="mt-5 text-success">Your Profile Details</h2>
@@ -237,6 +233,12 @@ const ProfileScreen = (params) => {
 
                         </div>
                     </div>
+                    <button onClick={() => {
+                        clearCookies()
+                        console.log(cookies)
+                    }}
+                            className={`btn btn-success`}>Logout
+                    </button>
                 </div>
                 <Footer/>
             </>

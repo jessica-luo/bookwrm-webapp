@@ -1,23 +1,19 @@
 import React, {useState, useEffect, useLayoutEffect} from "react";
-
 import {Link, useParams} from "react-router-dom";
-
 import NavigationComponent from "../NavigationComponent";
 import DetailsScreen from "../DetailsScreen";
-
 import Footer from "../FooterComponent";
-import loginStore from "../../store/login";
+import { useCookies } from "react-cookie";
 
 
 const SearchScreen = () => {
-    const [loginState, setLoginState] = useState(loginStore.initialState)
+    const [cookies, setCookie] = useCookies();
 
-    useLayoutEffect(() => {
-        loginStore.subscribe(setLoginState);
-        loginStore.init();
-    }, []);
-
-    const loggedIn = loginState.username !== ''
+    function handleCookie() {
+        setCookie("user", "hello", {
+            path: "/"
+        });
+    }
 
     const params = useParams();
     const bookTitle = params.searchTerm || 'batman';
@@ -42,8 +38,9 @@ const SearchScreen = () => {
     useEffect(findBooks, []);
     return (
         <>
-            <NavigationComponent activeLink={'/search'} loggedIn={loggedIn}/>
+            <NavigationComponent activeLink={'/search'}/>
             <br/><br/><br/>
+            {cookies.user && <p>{cookies.user}</p>}
             <div className="container">
                 <h1 className="text-success">Search Screen <i className="fas fa-search"></i></h1>
                 <ul className="list-group">

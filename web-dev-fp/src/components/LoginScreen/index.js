@@ -1,31 +1,34 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
-import {Link, useHistory, useParams} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import authorService from "../../services/authorService";
-import {useState, useLayoutEffect} from "react";
+import {useState} from "react";
 import userService from "../../services/userService";
-import loginStore from "../../store/login";
+import {useCookies} from "react-cookie";
 
 const LoginScreen = () => {
-
-    let { id } = useParams();
-    const username = id
     const history = useHistory();
     const [user, setUser] = useState({username: '', password: ''})
-    const [loginState, setLoginState] = useState(loginStore.initialState)
-    console.log("params", id)
+    const [cookies, setCookie] = useCookies();
 
-    useLayoutEffect(() => {
-        loginStore.subscribe(setLoginState);
-        loginStore.init();
-    }, []);
+    function handleCookie(type) {
+        setCookie("user", user.username, {
+            path: "/"
+        });
+        setCookie("loggedIn", true, {
+            path: "/"
+        });
+        setCookie("type", type, {
+            path: "/"
+        });
+    }
 
     const loginUser = (user) =>
         userService.loginUser(user)
             .then(state => {
                 if (state.message === "Login success") {
-                    loginStore.login({username: state.user.username, type: 'user'})
+                    handleCookie('user')
                     {
                         alert(state.message)
                     }
@@ -40,9 +43,9 @@ const LoginScreen = () => {
         authorService.loginAuthor(user)
             .then(state => {
                 if (state.message === "Login success") {
-                    loginStore.login({username: state.user.username, type: 'author'})
+                    handleCookie('author')
                     alert(state.message)
-                    history.push('/profile')
+                    history.push('/profile/private/'+ state.user.username)
                 } else {
                     alert(state.message)
                 }
@@ -51,7 +54,7 @@ const LoginScreen = () => {
 
     return (
         <>
-            <NavigationComponent activeLink={'/login'}/>
+            <NavigationComponent user={user.username} activeLink={'/login'}/>
             <div className={"container main-container bg-none"}>
                 <h1 className={"mt-5"}>Login</h1>
                 <input value={user.username}

@@ -1,37 +1,21 @@
 import NavigationComponent from "../NavigationComponent";
-import BookListItem from "../BookList/BookListItem";
 import featuredbooks from "./featuredbooks";
 import trendingbooks from "./trendingbooks";
 import Footer from "../FooterComponent";
 import BookList from "../BookList";
-import loginStore from "../../store/login";
-import {useState, useLayoutEffect} from "react";
-import userService from "../../services/userService";
+import { useCookies } from "react-cookie";
 
 const HomeScreen = () => {
-    const [loginState, setLoginState] = useState(loginStore.initialState)
-
-    useLayoutEffect(() => {
-        loginStore.subscribe(setLoginState);
-        loginStore.init();
-    }, []);
-
-    const loggedIn = loginState.username !== ''
+    const [cookies, setCookie] = useCookies();
 
     let toReadList
     let recentlyRead
     let userDetails
-    if (loggedIn) {
-        userService.findUserByUsername(loginState.username).then(user => {
-            console.log(user)
-            userDetails = user
-            console.log(userDetails)
-        })
-    }
 
     return (
         <>
-            <NavigationComponent activeLink={'/home'} loggedIn={loggedIn}/>
+            <NavigationComponent activeLink={'/home'}/>
+            {cookies.user && <p>{cookies.user}</p>}
             <h1 className="text-center mt-5 text-success font-weight-bold">BookWrm <i className={"fas fa-book"}/></h1>
             <p className="text-center">/ˈbo͝okˌwərm/</p>
             <p className="text-center"> 1. a person unusually devoted to reading and study</p>
@@ -54,17 +38,17 @@ const HomeScreen = () => {
                         <div className="col text-success"><h2>Revisit: Books You've Recently Finished</h2></div>
                         <div className="w-100"></div>
                         <div className="col text-secondary">
-                            <div hidden={loggedIn}>
+                            <div hidden={cookies.loggedIn}>
                                 Log in <a href={"/login"}>here</a> to add to your list!
                             </div>
-                            <div hidden={!loggedIn}>
+                            <div hidden={!cookies.loggedIn}>
                             </div>
                         </div>
                         <div className="col text-secondary">
-                            <div hidden={loggedIn}>
+                            <div hidden={cookies.loggedIn}>
                                 Log in <a href={"/login"}>here</a> to add to your list!
                             </div>
-                            <div hidden={!loggedIn}>
+                            <div hidden={!cookies.loggedIn}>
                             </div>
                         </div>
                     </div>

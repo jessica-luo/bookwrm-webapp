@@ -11,9 +11,16 @@ import SearchScreen from "./components/SearchScreen";
 import {BrowserRouter, Route} from "react-router-dom";
 import RegisterScreen from "./components/RegisterScreen";
 import {useState} from "react";
+import { useCookies } from "react-cookie";
 
 
 function App() {
+    const [cookies, setCookie] = useCookies(["user"]);
+    function handleCookie() {
+        setCookie("user", "gowtham", {
+            path: "/"
+        });
+    }
     return (
         <BrowserRouter>
             <Route path={["/", "/home"]} exact={true}> <HomeScreen/> </Route>
