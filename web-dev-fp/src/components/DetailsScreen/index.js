@@ -51,7 +51,7 @@ const DetailsScreen = () => {
         const isAuthor = cookies.type === 'author'
         if (!isAuthor) {
             userService.findUserByUsername(userLog)
-                .then(theUser => {
+                .then(theUser => { try{
                     setUser({
                         _id: theUser._id,
                         username: theUser.username,
@@ -64,8 +64,9 @@ const DetailsScreen = () => {
                         friends: theUser.friends,
                         readList: theUser.readList
                     })
-                    // console.log(theUser)
-                    //console.log(user)
+                } catch(e) {
+
+                }
                 })
         } else if (isAuthor) {
             authorService.findAuthorByUsername(cookies.user)
