@@ -93,24 +93,22 @@ const HomeScreen = () => {
                 </div>
                 <div className="container mt-5 mb-5">
                     <div className="row p-4 border rounded">
-                        <div className="row p-4 border rounded">
-                            <div className="col text-secondary">
-                                <h2 className="text-success">Your To-Read List</h2>
-                                <div hidden={cookies.loggedIn}>
-                                    Log in <a href={"/login"}>here</a> to add to your list!
-                                </div>
-                                <div hidden={!cookies.loggedIn}>
-                                    <BookList list={user.toReadList}/>
-                                </div>
+                        <div className="col text-secondary">
+                            <h2 className="text-success">Your To-Read List</h2>
+                            <div hidden={cookies.loggedIn}>
+                                Log in <a href={"/login"}>here</a> to add to your list!
                             </div>
-                            <div className="col text-secondary">
-                                <h2 className="text-success">Revisit: Books You've Recently Finished</h2>
-                                <div hidden={cookies.loggedIn}>
-                                    Log in <a href={"/login"}>here</a> to add to your list!
-                                </div>
-                                <div hidden={!cookies.loggedIn}>
-                                    <BookList list={user.readList}/>
-                                </div>
+                            <div hidden={!cookies.loggedIn}>
+                                <BookList list={user.toReadList}/>
+                            </div>
+                        </div>
+                        <div className="col text-secondary">
+                            <h2 className="text-success">Revisit: Books You've Recently Finished</h2>
+                            <div hidden={cookies.loggedIn}>
+                                Log in <a href={"/login"}>here</a> to add to your list!
+                            </div>
+                            <div hidden={!cookies.loggedIn}>
+                                <BookList list={user.readList}/>
                             </div>
                         </div>
                     </div>
