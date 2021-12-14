@@ -102,8 +102,7 @@ const ProfileScreen = (params) => {
                     </div>
 
                     <div className="mb-5" hidden={!user.username}>
-                        <h2 className="mt-5 text-success">{user.firstName}'s Public Profile </h2>
-                        <h5 className="text-primary">{user.firstName} {user.lastName} @{user.username}</h5>
+                        <h2 className="mt-5 text-success">@{userPage}'s Public Profile </h2>
                         <div className={"row"}>
                             <div className={"col"}>
                                 <h5>To Read</h5>

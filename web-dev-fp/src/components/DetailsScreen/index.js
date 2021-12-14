@@ -5,6 +5,8 @@ import Footer from "../FooterComponent";
 
 import {findBookByISBNAPI} from "../../services/detailsService";
 import {useCookies} from "react-cookie";
+import userService, {updateUser} from "../../services/userService";
+import authorService from "../../services/authorService";
 
 const DetailsScreen = () => {
     const [cookies, setCookie] = useCookies();
@@ -14,6 +16,9 @@ const DetailsScreen = () => {
     const [book, setBook] = useState([isbn]);
     const isbnForObject = "ISBN:" + isbn
     const bookObject = book[isbnForObject]
+    const userLog = cookies.user
+    const loggedIn = typeof userLog !== "undefined"
+    //console.log(loggedIn)
 
     const getBookDetails = () => {
 
@@ -22,9 +27,71 @@ const DetailsScreen = () => {
         fetchRes.then(results => setBook(results))
     }
 
-
-    console.log("bookObject", bookObject)
+    //console.log("bookObject", bookObject)
     useEffect(getBookDetails, []);
+
+    const [user, setUser] = useState({
+        _id: '',
+        username: cookies.user,
+        password: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        toReadList: [],
+        readList: [],
+        currentlyReadingList: [],
+        friends: []
+    })
+
+    useEffect(() => {
+        findUserByUsername()
+    }, [])
+
+    function findUserByUsername() {
+        const isAuthor = cookies.type === 'author'
+        if (!isAuthor) {
+            userService.findUserByUsername(userLog)
+                .then(theUser => {
+                    setUser({
+                        _id: theUser._id,
+                        username: theUser.username,
+                        password: theUser.password,
+                        email: theUser.email,
+                        firstName: theUser.firstName,
+                        lastName: theUser.lastName,
+                        toReadList: theUser.toReadList,
+                        currentlyReadingList: theUser.currentlyReadingList,
+                        friends: theUser.friends,
+                        readList: theUser.readList
+                    })
+                    // console.log(theUser)
+                    //console.log(user)
+                })
+        } else if (isAuthor) {
+            authorService.findAuthorByUsername(cookies.user)
+                .then(theUser => {
+                    setUser({
+                        username: theUser.username,
+                        password: theUser.password,
+                        email: theUser.email,
+                        firstName: theUser.firstName,
+                        lastName: theUser.lastName
+                    })
+                    // console.log(theUser)
+                    // console.log(user)
+                })
+        }
+    }
+
+    const addCurrentlyReading = () =>
+        userService.addCurrentlyReading(user, isbn)
+
+    const addToRead = () =>
+        userService.addToRead(user, isbn)
+
+    const addRead = () =>
+        userService.addRead(user, isbn)
+
     return (
         <>
             <NavigationComponent activeLink={'/details/'}/>
@@ -39,9 +106,20 @@ const DetailsScreen = () => {
                         bookObject &&
                         <div>
                             <li className="list-group-item">
-                                <button
+                                <button hidden={!loggedIn}
+                                        onClick={() => addCurrentlyReading()}
                                     className="btn btn-success float-end ms-2">
-                                    Add
+                                    Add Currently Reading
+                                </button>
+                                <button hidden={!loggedIn}
+                                        onClick={() => addToRead()}
+                                        className="btn btn-warning float-end ms-2">
+                                    Add To Your To-Read
+                                </button>
+                                <button hidden={!loggedIn}
+                                        onClick={() => addRead()}
+                                        className="btn btn-primary float-end ms-2">
+                                    Add To Already Read
                                 </button>
                                 <img src={bookObject.thumbnail_url}/>
                                 <h3>

@@ -5,7 +5,7 @@ import DetailsScreen from "../DetailsScreen";
 const BookListItem = ({book}) => {
 
     return (
-        <ListGroupItem className="p-4 list-group-item-action">
+        <ListGroupItem className="p-4">
             <a href={`/details/${book.isbn}`}>
                 <button
                     onClick={() => DetailsScreen(book.isbn)}
