@@ -28,6 +28,7 @@ const ProfileScreen = (params) => {
     }
 
     const privateProfile = params.match.params.authorized === "private"
+    const userPage = params.match.params.id
     console.log(privateProfile)
 
     const [user, setUser] = useState({
@@ -51,7 +52,7 @@ const ProfileScreen = (params) => {
     function findUserByUsername() {
         const isAuthor = cookies.type === 'author'
         if (!isAuthor) {
-            userService.findUserByUsername(cookies.user)
+            userService.findUserByUsername(userPage)
                 .then(theUser => {
                     setUser({
                         _id: theUser._id,
@@ -63,7 +64,7 @@ const ProfileScreen = (params) => {
                         toReadList: theUser.toReadList,
                         currentlyReadingList: theUser.currentlyReadingList,
                         friends: theUser.friends,
-                        readList: theUser.readList,
+                        readList: theUser.readList
                     })
                     // console.log(theUser)
                     console.log(user)
