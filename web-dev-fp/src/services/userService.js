@@ -100,7 +100,7 @@ export const updateUser = (user) =>
         headers: {
             'content-type': 'application/json'
         }
-    }).then(response => response.json());
+    }).then(res => console.log("aaaa", res));
 
 
 export default {

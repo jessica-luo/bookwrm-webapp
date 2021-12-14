@@ -1,7 +1,7 @@
 import React from "react";
 import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
-import {Link, useHistory} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 import authorService from "../../services/authorService";
 import {useState, useLayoutEffect} from "react";
 import userService from "../../services/userService";
@@ -9,9 +9,12 @@ import loginStore from "../../store/login";
 
 const LoginScreen = () => {
 
+    let { id } = useParams();
+    const username = id
     const history = useHistory();
     const [user, setUser] = useState({username: '', password: ''})
     const [loginState, setLoginState] = useState(loginStore.initialState)
+    console.log("params", id)
 
     useLayoutEffect(() => {
         loginStore.subscribe(setLoginState);

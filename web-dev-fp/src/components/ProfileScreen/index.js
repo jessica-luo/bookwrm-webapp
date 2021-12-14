@@ -83,14 +83,14 @@ const ProfileScreen = (params) => {
     {
         return (
             <>
-                <NavigationComponent activeLink={'/login'} loggedIn={loggedIn}/>
+                <NavigationComponent activeLink={`/login/${user.username}`} loggedIn={user.username}/>
 
                 <div className={"container main-container bg-none"}>
                     <div className="text-success mt-5 mb-5" hidden={loggedIn}>
-                        <h3> Log in <a href={"/login"}>here</a> to view your profile!</h3>
+                        <h3> Log in <a href={`/login/${user.username}`}>here</a> to view your profile!</h3>
                     </div>
 
-                    <div className="mb-5" hidden={!loggedIn}>
+                    <div className="mb-5" hidden={!user.username}>
                         <h1 className="mt-5 text-success">Public Profile </h1>
                         <h4 className="text-primary">{user.firstName} {user.lastName} @{loggedInUser}</h4>
 
