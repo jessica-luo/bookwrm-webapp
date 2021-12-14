@@ -56,18 +56,22 @@ const ProfileScreen = (params) => {
         if (!isAuthor) {
             userService.findUserByUsername(userPage)
                 .then(theUser => {
-                    setUser({
-                        _id: theUser._id,
-                        username: theUser.username,
-                        password: theUser.password,
-                        email: theUser.email,
-                        firstName: theUser.firstName,
-                        lastName: theUser.lastName,
-                        toReadList: theUser.toReadList,
-                        currentlyReadingList: theUser.currentlyReadingList,
-                        friends: theUser.friends,
-                        readList: theUser.readList
-                    })
+                    try {
+                        setUser({
+                            _id: theUser._id,
+                            username: theUser.username,
+                            password: theUser.password,
+                            email: theUser.email,
+                            firstName: theUser.firstName,
+                            lastName: theUser.lastName,
+                            toReadList: theUser.toReadList,
+                            currentlyReadingList: theUser.currentlyReadingList,
+                            friends: theUser.friends,
+                            readList: theUser.readList
+                        })
+                    } catch (e) {
+
+                    }
                     // console.log(theUser)
                     //console.log(user)
                 })
@@ -108,6 +112,8 @@ const ProfileScreen = (params) => {
                 friends: user.friends,
                 readList: user.readList
             })
+            alert('Update success')
+            history.push('/login')
         } else {
             updateAuthor({
                 _id: user._id,
@@ -122,6 +128,8 @@ const ProfileScreen = (params) => {
                 readList: user.readList,
                 authoredList: user.authoredList
             })
+            alert('Update success')
+            history.push('/login')
         }
     }
 
