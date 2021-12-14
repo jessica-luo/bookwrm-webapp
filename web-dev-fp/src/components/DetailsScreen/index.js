@@ -205,25 +205,27 @@ const DetailsScreen = () => {
                                 bookObject &&
                                 <div>
                                     <li className="list-group-item">
-                                        <button hidden={!loggedIn}
-                                                onClick={() => addCurrentlyReading()}
-                                                className="btn btn-success float-end ms-2">
-                                            Add Currently Reading
-                                        </button>
-                                        <button hidden={!loggedIn}
-                                                onClick={() => addToRead()}
-                                                className="btn btn-warning float-end ms-2">
-                                            Add To Your To-Read
-                                        </button>
-                                        <button hidden={!loggedIn}
-                                                onClick={() => addRead()}
-                                                className="btn btn-primary float-end ms-2">
-                                            Add To Already Read
-                                        </button>
-                                        <img src={bookObject.thumbnail_url}/>
+                                        <p hidden={!loggedIn}>
+                                            <button hidden={!loggedIn}
+                                                    onClick={() => addCurrentlyReading()}
+                                                    className="btn btn-success ms-2">
+                                                Add Currently Reading
+                                            </button>
+                                            <button hidden={!loggedIn}
+                                                    onClick={() => addToRead()}
+                                                    className="btn btn-warning ms-2">
+                                                Add To Your To-Read
+                                            </button>
+                                            <button hidden={!loggedIn}
+                                                    onClick={() => addRead()}
+                                                    className="btn btn-primary ms-2">
+                                                Add To Already Read
+                                            </button>
+                                        </p>
                                         <h3>
                                             {bookObject['details'].title.toString()}
                                         </h3>
+                                        <img src={bookObject.thumbnail_url}/>
                                     </li>
                                     <li className="list-group-item">
                                         <b>bib_key:</b> {bookObject.bib_key.replace(/:/g, ": ")}

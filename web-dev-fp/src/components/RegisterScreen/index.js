@@ -21,7 +21,8 @@ const RegisterScreen = () => {
                 if (state.message === "User already exists, try logging in") {
                     alert(state.message)
                 } else {
-                    history.push('/login')
+                    alert("Success! Please review our privacy policy and then log in." )
+                    history.push('/privacy')
                 }
             })
 
@@ -31,7 +32,8 @@ const RegisterScreen = () => {
                 if (state.message === "User already exists, try logging in") {
                     alert(state.message)
                 } else {
-                    history.push('/login')
+                    alert("Success! Please review our privacy policy and then log in." )
+                    history.push('/privacy')
                 }
             })
 
@@ -57,7 +59,7 @@ const RegisterScreen = () => {
                            onChange={(e) => setUser({
                                ...user,
                                username: user.username,
-                               password:  e.target.value,
+                               password: e.target.value,
                                email: user.email,
                                firstName: user.firstName,
                                lastName: user.lastName
@@ -67,7 +69,7 @@ const RegisterScreen = () => {
                            onChange={(e) => setUser({
                                ...user,
                                username: user.username,
-                               password:  user.password,
+                               password: user.password,
                                email: e.target.value,
                                firstName: user.firstName,
                                lastName: user.lastName
@@ -77,7 +79,7 @@ const RegisterScreen = () => {
                            onChange={(e) => setUser({
                                ...user,
                                username: user.username,
-                               password:  user.password,
+                               password: user.password,
                                email: user.email,
                                firstName: e.target.value,
                                lastName: user.lastName
@@ -87,7 +89,7 @@ const RegisterScreen = () => {
                            onChange={(e) => setUser({
                                ...user,
                                username: user.username,
-                               password:  user.password,
+                               password: user.password,
                                email: user.email,
                                firstName: user.firstName,
                                lastName: e.target.value
