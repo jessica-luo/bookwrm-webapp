@@ -105,7 +105,6 @@ const ProfileScreen = (params) => {
                     <div className="mb-5" hidden={!user.username}>
                         <h1 className="mt-5 text-success">Public Profile </h1>
                         <h4 className="text-primary">{user.firstName} {user.lastName} @{cookies.loggedIn}</h4>
-                        <h5>*****put their book lists here*****</h5>
                         <div className={"row"}>
                             <div className={"col"}>
                                 <h5>To Read</h5>
