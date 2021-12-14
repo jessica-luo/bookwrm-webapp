@@ -23,7 +23,7 @@ export const findAuthorByUsername = (username) =>
 
 export const updateAuthor = (user) =>
     fetch(`${URL}/${user._id}`, {
-        method: 'PUT',
+        method: 'POST',
         body: JSON.stringify(user),
         headers: {
             'content-type': 'application/json'
