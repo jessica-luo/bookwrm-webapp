@@ -40,7 +40,8 @@ const DetailsScreen = () => {
         toReadList: [],
         readList: [],
         currentlyReadingList: [],
-        friends: []
+        friends: [],
+        authoredList: []
     })
 
     useEffect(() => {
@@ -51,7 +52,27 @@ const DetailsScreen = () => {
         const isAuthor = cookies.type === 'author'
         if (!isAuthor) {
             userService.findUserByUsername(userLog)
-                .then(theUser => { try{
+                .then(theUser => {
+                    try {
+                        setUser({
+                            _id: theUser._id,
+                            username: theUser.username,
+                            password: theUser.password,
+                            email: theUser.email,
+                            firstName: theUser.firstName,
+                            lastName: theUser.lastName,
+                            toReadList: theUser.toReadList,
+                            currentlyReadingList: theUser.currentlyReadingList,
+                            friends: theUser.friends,
+                            readList: theUser.readList
+                        })
+                    } catch (e) {
+
+                    }
+                })
+        } else if (isAuthor) {
+            authorService.findAuthorByUsername(cookies.user)
+                .then(theUser => {
                     setUser({
                         _id: theUser._id,
                         username: theUser.username,
@@ -62,21 +83,8 @@ const DetailsScreen = () => {
                         toReadList: theUser.toReadList,
                         currentlyReadingList: theUser.currentlyReadingList,
                         friends: theUser.friends,
-                        readList: theUser.readList
-                    })
-                } catch(e) {
-
-                }
-                })
-        } else if (isAuthor) {
-            authorService.findAuthorByUsername(cookies.user)
-                .then(theUser => {
-                    setUser({
-                        username: theUser.username,
-                        password: theUser.password,
-                        email: theUser.email,
-                        firstName: theUser.firstName,
-                        lastName: theUser.lastName
+                        readList: theUser.readList,
+                        authoredList: theUser.authoredList
                     })
                     // console.log(theUser)
                     // console.log(user)
@@ -84,14 +92,100 @@ const DetailsScreen = () => {
         }
     }
 
-    const addCurrentlyReading = () =>
-        userService.addCurrentlyReading(user, isbn)
+    const isAuthor = cookies.type === 'author'
 
-    const addToRead = () =>
-        userService.addToRead(user, isbn)
+    function addCurrentlyReading() {
+        if (!isAuthor) {
+            userService.addCurrentlyReading({
+                _id: user._id,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                toReadList: user.toReadList,
+                currentlyReadingList: user.currentlyReadingList,
+                friends: user.friends,
+                readList: user.readList
+            }, isbn)
+        } else {
+            authorService.addCurrentlyReading({
+                _id: user._id,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                toReadList: user.toReadList,
+                currentlyReadingList: user.currentlyReadingList,
+                friends: user.friends,
+                readList: user.readList,
+                authoredList: user.authoredList
+            }, isbn)
+        }
+    }
 
-    const addRead = () =>
-        userService.addRead(user, isbn)
+    function addToRead() {
+        if (!isAuthor) {
+            userService.addToRead({
+                _id: user._id,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                toReadList: user.toReadList,
+                currentlyReadingList: user.currentlyReadingList,
+                friends: user.friends,
+                readList: user.readList
+            }, isbn)
+        } else {
+            authorService.addToRead({
+                _id: user._id,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                toReadList: user.toReadList,
+                currentlyReadingList: user.currentlyReadingList,
+                friends: user.friends,
+                readList: user.readList,
+                authoredList: user.authoredList
+            }, isbn)
+        }
+    }
+
+    function addRead() {
+        if (!isAuthor) {
+            userService.addRead({
+                _id: user._id,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                toReadList: user.toReadList,
+                currentlyReadingList: user.currentlyReadingList,
+                friends: user.friends,
+                readList: user.readList
+            }, isbn)
+        } else {
+            authorService.addRead({
+                _id: user._id,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                toReadList: user.toReadList,
+                currentlyReadingList: user.currentlyReadingList,
+                friends: user.friends,
+                readList: user.readList,
+                authoredList: user.authoredList
+            }, isbn)
+        }
+    }
 
     return (
         <>
@@ -109,7 +203,7 @@ const DetailsScreen = () => {
                             <li className="list-group-item">
                                 <button hidden={!loggedIn}
                                         onClick={() => addCurrentlyReading()}
-                                    className="btn btn-success float-end ms-2">
+                                        className="btn btn-success float-end ms-2">
                                     Add Currently Reading
                                 </button>
                                 <button hidden={!loggedIn}

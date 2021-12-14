@@ -94,7 +94,21 @@ const ProfileScreen = (params) => {
     }
 
     function edit(user) {
-        if (cookies.type === 'author') {
+        const isAuthor = cookies.type === 'author'
+        if (!isAuthor) {
+            updateUser({
+                _id: user._id,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                toReadList: user.toReadList,
+                currentlyReadingList: user.currentlyReadingList,
+                friends: user.friends,
+                readList: user.readList
+            })
+        } else {
             updateAuthor({
                 _id: user._id,
                 username: user.username,
@@ -108,24 +122,8 @@ const ProfileScreen = (params) => {
                 readList: user.readList,
                 authoredList: user.authoredList
             })
-        } else {
-            updateUser({
-                _id: user._id,
-                username: user.username,
-                password: user.password,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                toReadList: user.toReadList,
-                currentlyReadingList: user.currentlyReadingList,
-                friends: user.friends,
-                readList: user.readList
-            })
         }
     }
-
-    //console.log(loginState)
-    // (isAuthor ? updateAuthor(user) : updateUser(user))
 
     {
         return (
