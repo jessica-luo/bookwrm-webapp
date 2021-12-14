@@ -39,7 +39,7 @@ const DetailsScreen = () => {
             <NavigationComponent activeLink={'/details/'} loggedIn={loggedIn}/>
             <br/><br/><br/>
             <div className="container">
-                <h1>Details Screen</h1>
+                <h1 className="text-success">Book Details</h1>
                 <div>
 
                 </div>
@@ -57,16 +57,16 @@ const DetailsScreen = () => {
                                         {bookObject['details'].title.toString()}
                                     </h3>
                                 </li>
-                                <li className="list-group-item">bib_key: {bookObject.bib_key}</li>
-                                <li className="list-group-item">Info URL: {bookObject.info_url}</li>
-                                <li className="list-group-item">Preview URL: {bookObject.preview_url}</li>
+                                <li className="list-group-item"><b>bib_key:</b> {bookObject.bib_key.replace(/:/g, ": ")}</li>
+                                <li className="list-group-item"><b>Info URL:</b> <a href={bookObject.info_url}>{bookObject.info_url}</a></li>
+                                <li className="list-group-item"><b>Preview URL:</b> <a href={bookObject.preview_url}>{bookObject.preview_url}</a></li>
                                 <li className="list-group-item">
                                     <table>
                                         <tbody>
                                             <tr>
                                                 <tr>
                                                     <td>
-                                                        Author
+                                                        <b>Author</b>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -85,7 +85,7 @@ const DetailsScreen = () => {
                                     </table>
                                 </li>
 
-                                <li className="list-group-item">Author(s):
+                                <li className="list-group-item"><b>Author(s):</b>
                                     {
                                         bookObject['details'] && bookObject['details']['authors'].map(details =>
                                             <li className="list-group-item">
@@ -96,7 +96,7 @@ const DetailsScreen = () => {
                                 </li>
 
 
-                                <li className="list-group-item">Contributors(s):
+                                <li className="list-group-item"><b>Contributors(s):</b>
                                     {
                                         bookObject['details'] && bookObject['details']['contributors'] && bookObject['details']['contributors'].map(details =>
                                             <li className="list-group-item">
@@ -106,18 +106,18 @@ const DetailsScreen = () => {
                                     }
                                 </li>
                                 <li className="list-group-item">
-                                    Description:
+                                    <b>Description:</b>
                                     <li className="list-group-item">
                                         {bookObject['details'].description}
                                     </li></li>
-                                <li className="list-group-item">Number of Pages: {bookObject['details'].number_of_pages}{bookObject['details'].pagination}</li>
+                                <li className="list-group-item"><b>Number of Pages:</b> {bookObject['details'].number_of_pages}{bookObject['details'].pagination}</li>
                                 <li className="list-group-item">
                                     <table>
                                         <tbody>
                                         <tr>
                                             <tr>
                                                 <td>
-                                                    Languages(s):
+                                                    <b>Languages(s):</b>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -136,14 +136,14 @@ const DetailsScreen = () => {
                                         </tbody>
                                     </table>
                                 </li>
-                                <li className="list-group-item">Publish Date: {bookObject['details'].publish_date}</li>
+                                <li className="list-group-item"><b>Publish Date:</b> {bookObject['details'].publish_date}</li>
                                 <li className="list-group-item">
                                     <table>
                                         <tbody>
                                         <tr>
                                             <tr>
                                                 <td>
-                                                    Subject(s):
+                                                    <b>Subject(s):</b>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -168,7 +168,7 @@ const DetailsScreen = () => {
                                         <tr>
                                             <tr>
                                                 <td>
-                                                    Table of Contents
+                                                    <b>Table of Contents</b>
                                                 </td>
                                             </tr>
                                             <tr>
