@@ -40,7 +40,6 @@ const SearchScreen = () => {
         <>
             <NavigationComponent activeLink={'/search'}/>
             <br/><br/><br/>
-            {cookies.user && <p>{cookies.user}</p>}
             <div className="container">
                 <h1 className="text-success">Search Screen <i className="fas fa-search"></i></h1>
                 <ul className="list-group">

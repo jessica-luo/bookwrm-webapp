@@ -4,18 +4,70 @@ import trendingbooks from "./trendingbooks";
 import Footer from "../FooterComponent";
 import BookList from "../BookList";
 import { useCookies } from "react-cookie";
+import {useEffect, useState} from "react";
+import userService from "../../services/userService";
+import authorService from "../../services/authorService";
 
 const HomeScreen = () => {
     const [cookies, setCookie] = useCookies();
 
-    let toReadList
-    let recentlyRead
-    let userDetails
+    const [user, setUser] = useState({
+        _id: '',
+        username: cookies.user,
+        password: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        toReadList: [],
+        readList: [],
+        currentlyReadingList: [],
+        friends: []
+    })
+
+    useEffect(() => {
+        findUserByUsername()
+    }, [])
+
+
+    function findUserByUsername() {
+        const isAuthor = cookies.type === 'author'
+        if (!isAuthor) {
+            userService.findUserByUsername(cookies.user)
+                .then(theUser => {
+                    setUser({
+                        _id: theUser._id,
+                        username: theUser.username,
+                        password: theUser.password,
+                        email: theUser.email,
+                        firstName: theUser.firstName,
+                        lastName: theUser.lastName,
+                        toReadList: theUser.toReadList,
+                        currentlyReadingList: theUser.currentlyReadingList,
+                        friends: theUser.friends,
+                        readList: theUser.readList,
+                    })
+                    // console.log(theUser)
+                    console.log(user)
+                })
+        } else if (isAuthor) {
+            authorService.findAuthorByUsername(cookies.user)
+                .then(theUser => {
+                    setUser({
+                        username: theUser.username,
+                        password: theUser.password,
+                        email: theUser.email,
+                        firstName: theUser.firstName,
+                        lastName: theUser.lastName
+                    })
+                    // console.log(theUser)
+                    // console.log(user)
+                })
+        }
+    }
 
     return (
         <>
             <NavigationComponent activeLink={'/home'}/>
-            {cookies.user && <p>{cookies.user}</p>}
             <h1 className="text-center mt-5 text-success font-weight-bold">BookWrm <i className={"fas fa-book"}/></h1>
             <p className="text-center">/ˈbo͝okˌwərm/</p>
             <p className="text-center"> 1. a person unusually devoted to reading and study</p>
@@ -42,6 +94,7 @@ const HomeScreen = () => {
                                 Log in <a href={"/login"}>here</a> to add to your list!
                             </div>
                             <div hidden={!cookies.loggedIn}>
+                                <BookList list={user.toReadList}/>
                             </div>
                         </div>
                         <div className="col text-secondary">
@@ -49,6 +102,7 @@ const HomeScreen = () => {
                                 Log in <a href={"/login"}>here</a> to add to your list!
                             </div>
                             <div hidden={!cookies.loggedIn}>
+                                <BookList list={user.readList}/>
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ import userService, {findUserByUsername, updateUser} from "../../services/userSe
 import authorService, {findAuthorByUsername, updateAuthor} from "../../services/authorService";
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router-dom";
+import BookList from "../BookList";
 
 //const selectProfile = (state) => state.profile;
 
@@ -105,6 +106,22 @@ const ProfileScreen = (params) => {
                         <h1 className="mt-5 text-success">Public Profile </h1>
                         <h4 className="text-primary">{user.firstName} {user.lastName} @{cookies.loggedIn}</h4>
                         <h5>*****put their book lists here*****</h5>
+                        <div className={"row"}>
+                            <div className={"col"}>
+                                <h5>To Read</h5>
+                                <BookList list={user.toReadList}/>
+                            </div>
+                            <div className={"col"}>
+                                <h5>Read</h5>
+                                <BookList list={user.readList}/>
+                            </div>
+                            <div className={"col"}>
+                                <h5>Currently Reading</h5>
+                                <BookList list={user.currentlyReadingList}/>
+                            </div>
+
+                        </div>
+
 
                         <h1 className="mt-5 text-success">Your User Details </h1>
                         Username: @{cookies.user} <br/>
