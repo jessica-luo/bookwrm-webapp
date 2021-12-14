@@ -95,7 +95,7 @@ export const deleteCurrentlyReading = (user, isbn) =>
 
 export const updateUser = (user) =>
     fetch(`${URL}/${user._id}`, {
-        method: 'PUT',
+        method: 'POST',
         body: JSON.stringify(user),
         headers: {
             'content-type': 'application/json'
