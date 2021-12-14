@@ -34,11 +34,16 @@ const ProfileScreen = (params) => {
     // }
 
     const [user, setUser] = useState({
+        _id: '',
         username: '',
         password: '',
         email: '',
         firstName: '',
-        lastName: ''
+        lastName: '',
+        toReadList: [],
+        readList: [],
+        currentlyReadingList: [],
+        friends: []
     })
 
     useEffect(() => {
@@ -51,14 +56,19 @@ const ProfileScreen = (params) => {
             userService.findUserByUsername(userProfile)
                 .then(theUser => {
                     setUser({
+                        _id: theUser._id,
                         username: theUser.username,
                         password: theUser.password,
                         email: theUser.email,
                         firstName: theUser.firstName,
-                        lastName: theUser.lastName
+                        lastName: theUser.lastName,
+                        toReadList: theUser.toReadList,
+                        currentlyReadingList: theUser.currentlyReadingList,
+                        friends: theUser.friends,
+                        readList: theUser.readList,
                     })
                     // console.log(theUser)
-                    // console.log(user)
+                    console.log(user)
                 })
         } else if (isAuthor) {
             authorService.findAuthorByUsername(userProfile)
@@ -77,8 +87,9 @@ const ProfileScreen = (params) => {
     }
 
     const edit = (user) =>
-        //console.log(loginState)
-        (isAuthor ? updateAuthor(user) : updateUser(user))
+        updateUser(user)
+    //console.log(loginState)
+    // (isAuthor ? updateAuthor(user) : updateUser(user))
 
     {
         return (
@@ -86,6 +97,10 @@ const ProfileScreen = (params) => {
                 <NavigationComponent activeLink={`/login/${user.username}`} loggedIn={user.username}/>
 
                 <div className={"container main-container bg-none"}>
+                    <h1 className="mt-5 text-success">Public Profile </h1>
+                    <h4 className="text-primary">@{loggedInUser}</h4>
+                    <h5>*****put their book lists here*****</h5>
+
                     <div className="text-success mt-5 mb-5" hidden={loggedIn}>
                         <h3> Log in <a href={`/login/${user.username}`}>here</a> to view your profile!</h3>
                     </div>
@@ -160,12 +175,70 @@ const ProfileScreen = (params) => {
                         <button onClick={() => edit(user)}
                                 className={`btn btn-success`}>Update Profile
                         </button>
+                    <div className="mb-5" hidden={!loggedIn}>
+
+                        <div hidden={!privateProfile}>
+                            <h2 className="mt-5 text-success">Your Profile Details</h2>
+                            <input value={user.username}
+                                   onChange={(e) => setUser({
+                                       ...user,
+                                       username: e.target.value,
+                                       password: user.password,
+                                       email: user.email,
+                                       firstName: user.firstName,
+                                       lastName: user.lastName
+                                   })}
+                                   placeholder={"username"} className={`form-control mt-1`}/>
+                            <input value={user.password}
+                                   onChange={(e) => setUser({
+                                       ...user,
+                                       username: user.username,
+                                       password: e.target.value,
+                                       email: user.email,
+                                       firstName: user.firstName,
+                                       lastName: user.lastName
+                                   })}
+                                   placeholder={"password"} type={"password"} className={`form-control mt-1`}/>
+                            <input value={user.email}
+                                   onChange={(e) => setUser({
+                                       ...user,
+                                       username: user.username,
+                                       password: user.password,
+                                       email: e.target.value,
+                                       firstName: user.firstName,
+                                       lastName: user.lastName
+                                   })}
+                                   placeholder={"email"} className={`form-control mt-1`}/>
+                            <input value={user.firstName}
+                                   onChange={(e) => setUser({
+                                       ...user,
+                                       username: user.username,
+                                       password: user.password,
+                                       email: user.email,
+                                       firstName: e.target.value,
+                                       lastName: user.lastName
+                                   })}
+                                   placeholder={"first name"} className={`form-control mt-1`}/>
+                            <input value={user.lastName}
+                                   onChange={(e) => setUser({
+                                       ...user,
+                                       username: user.username,
+                                       password: user.password,
+                                       email: user.email,
+                                       firstName: user.firstName,
+                                       lastName: e.target.value
+                                   })}
+                                   placeholder={"last name"} className={`form-control mt-1`}/>
+                            <button onClick={() => edit(user)}
+                                    className={`btn btn-success`}>Update Profile
+                            </button>
+                        </div>
+
                     </div>
                 </div>
                 <Footer/>
             </>
         )
     }
-};
-
+}
 export default ProfileScreen;
