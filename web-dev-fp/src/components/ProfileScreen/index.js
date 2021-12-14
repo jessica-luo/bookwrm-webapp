@@ -15,6 +15,7 @@ const ProfileScreen = (params) => {
     const [cookies, setCookie, removeCookie] = useCookies();
 
     console.log(cookies)
+
     function clearCookies() {
         removeCookie("user", {
             path: "/"
@@ -42,7 +43,8 @@ const ProfileScreen = (params) => {
         toReadList: [],
         readList: [],
         currentlyReadingList: [],
-        friends: []
+        friends: [],
+        authoredList: []
     })
 
     useEffect(() => {
@@ -82,7 +84,8 @@ const ProfileScreen = (params) => {
                         toReadList: theUser.toReadList,
                         currentlyReadingList: theUser.currentlyReadingList,
                         friends: theUser.friends,
-                        readList: theUser.readList
+                        readList: theUser.readList,
+                        authoredList: theUser.authoredList
                     })
                     // console.log(theUser)
                     // console.log(user)
@@ -90,8 +93,37 @@ const ProfileScreen = (params) => {
         }
     }
 
-    const edit = (user) =>
-        updateUser(user)
+    function edit(user) {
+        if (cookies.type === 'author') {
+            updateAuthor({
+                _id: user._id,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                toReadList: user.toReadList,
+                currentlyReadingList: user.currentlyReadingList,
+                friends: user.friends,
+                readList: user.readList,
+                authoredList: user.authoredList
+            })
+        } else {
+            updateUser({
+                _id: user._id,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                toReadList: user.toReadList,
+                currentlyReadingList: user.currentlyReadingList,
+                friends: user.friends,
+                readList: user.readList
+            })
+        }
+    }
+
     //console.log(loginState)
     // (isAuthor ? updateAuthor(user) : updateUser(user))
 
@@ -120,6 +152,10 @@ const ProfileScreen = (params) => {
                             <div className={"col"}>
                                 <h5>Currently Reading</h5>
                                 <BookList list={user.currentlyReadingList}/>
+                            </div>
+                            <div className={"col"} hidden={cookies.type !== 'author'}>
+                                <h5>Authored List</h5>
+                                <BookList list={user.authoredList}/>
                             </div>
 
                         </div>
