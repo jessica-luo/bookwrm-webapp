@@ -14,6 +14,7 @@ const ProfileScreen = (params) => {
     const history = useHistory();
     const [cookies, setCookie, removeCookie] = useCookies();
 
+    console.log(cookies)
     function clearCookies() {
         removeCookie("user", {
             path: "/"
@@ -48,7 +49,6 @@ const ProfileScreen = (params) => {
         findUserByUsername()
     }, [])
 
-
     function findUserByUsername() {
         const isAuthor = cookies.type === 'author'
         if (!isAuthor) {
@@ -73,11 +73,16 @@ const ProfileScreen = (params) => {
             authorService.findAuthorByUsername(cookies.user)
                 .then(theUser => {
                     setUser({
+                        _id: theUser._id,
                         username: theUser.username,
                         password: theUser.password,
                         email: theUser.email,
                         firstName: theUser.firstName,
-                        lastName: theUser.lastName
+                        lastName: theUser.lastName,
+                        toReadList: theUser.toReadList,
+                        currentlyReadingList: theUser.currentlyReadingList,
+                        friends: theUser.friends,
+                        readList: theUser.readList
                     })
                     // console.log(theUser)
                     // console.log(user)
@@ -118,7 +123,6 @@ const ProfileScreen = (params) => {
                             </div>
 
                         </div>
-
 
 
                         <div className="mb-5" hidden={!cookies.loggedIn}>

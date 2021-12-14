@@ -24,11 +24,13 @@ const HomeScreen = () => {
         friends: []
     })
 
+
     useEffect(() => {
         if (cookies.hasOwnProperty('user') && cookies.loggedIn === true) {
             findUserByUsername()
         }
     }, [])
+
 
     useEffect(() => {
         findUserByUsername()
@@ -38,6 +40,28 @@ const HomeScreen = () => {
         const isAuthor = cookies.type === 'author'
         if (!isAuthor) {
             userService.findUserByUsername(cookies.user)
+                .then(theUser => {
+                    try {
+                        setUser({
+                            _id: theUser._id,
+                            username: theUser.username,
+                            password: theUser.password,
+                            email: theUser.email,
+                            firstName: theUser.firstName,
+                            lastName: theUser.lastName,
+                            toReadList: theUser.toReadList,
+                            currentlyReadingList: theUser.currentlyReadingList,
+                            friends: theUser.friends,
+                            readList: theUser.readList,
+                        })
+                    } catch (e) {
+
+                    }
+                    // console.log(theUser)
+                    //console.log(user)
+                })
+        } else if (isAuthor) {
+            authorService.findAuthorByUsername(cookies.user)
                 .then(theUser => {
                     setUser({
                         _id: theUser._id,
@@ -49,28 +73,13 @@ const HomeScreen = () => {
                         toReadList: theUser.toReadList,
                         currentlyReadingList: theUser.currentlyReadingList,
                         friends: theUser.friends,
-                        readList: theUser.readList,
-                    })
-                    // console.log(theUser)
-                    console.log(user)
-                })
-        } else if (isAuthor) {
-            authorService.findAuthorByUsername(cookies.user)
-                .then(theUser => {
-                    setUser({
-                        username: theUser.username,
-                        password: theUser.password,
-                        email: theUser.email,
-                        firstName: theUser.firstName,
-                        lastName: theUser.lastName
+                        readList: theUser.readList
                     })
                     // console.log(theUser)
                     // console.log(user)
                 })
         }
     }
-
-    console.log(user)
 
     return (
         <>
