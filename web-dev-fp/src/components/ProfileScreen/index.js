@@ -112,8 +112,7 @@ const ProfileScreen = (params) => {
                 friends: user.friends,
                 readList: user.readList
             })
-            alert('Update success')
-            history.push('/login')
+            alert('Update success, please login again')
         } else {
             updateAuthor({
                 _id: user._id,
@@ -128,8 +127,7 @@ const ProfileScreen = (params) => {
                 readList: user.readList,
                 authoredList: user.authoredList
             })
-            alert('Update success')
-            history.push('/login')
+            alert('Update success please login again')
         }
     }
 
@@ -221,7 +219,14 @@ const ProfileScreen = (params) => {
                                            lastName: e.target.value
                                        })}
                                        placeholder={"last name"} className={`form-control mt-1`}/>
-                                <button onClick={() => edit(user)}
+                                <button onClick={() => {
+                                    {
+                                        edit(user)
+                                    }
+                                    {
+                                        clearCookies()
+                                    }
+                                }}
                                         className={`btn btn-success`}>Update Profile
                                 </button>
                             </div>
