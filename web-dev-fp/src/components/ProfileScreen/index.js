@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
 import {useState, useLayoutEffect} from "react";
-import userService, {findUserByUsername, updateUser} from "../../services/userService";
+import userService, {findAllUsers, findUserByUsername, updateUser} from "../../services/userService";
 import authorService, {findAuthorByUsername, updateAuthor} from "../../services/authorService";
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router-dom";
@@ -122,9 +122,8 @@ const ProfileScreen = (params) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 toReadList: user.toReadList,
-                currentlyReadingList: user.currentlyReadingList,
-                friends: user.friends,
                 readList: user.readList,
+                currentlyReadingList: user.currentlyReadingList,
                 authoredList: user.authoredList
             })
             alert('Update success please login again')

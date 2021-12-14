@@ -7,6 +7,7 @@ import {findBookByISBNAPI} from "../../services/detailsService";
 import {useCookies} from "react-cookie";
 import userService, {updateUser} from "../../services/userService";
 import authorService from "../../services/authorService";
+import UserList from "../UserList";
 
 const DetailsScreen = () => {
     const [cookies, setCookie] = useCookies();
@@ -362,6 +363,7 @@ const DetailsScreen = () => {
 
                     }
                 </ul>
+                <UserList/>
             </div>
             <Footer/>
         </>
