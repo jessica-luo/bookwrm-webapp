@@ -3,7 +3,7 @@ import featuredbooks from "./featuredbooks";
 import trendingbooks from "./trendingbooks";
 import Footer from "../FooterComponent";
 import BookList from "../BookList";
-import { useCookies } from "react-cookie";
+import {useCookies} from "react-cookie";
 import {useEffect, useState} from "react";
 import userService from "../../services/userService";
 import authorService from "../../services/authorService";
@@ -30,6 +30,9 @@ const HomeScreen = () => {
         }
     }, [])
 
+    useEffect(() => {
+        findUserByUsername()
+    }, [])
 
     function findUserByUsername() {
         const isAuthor = cookies.type === 'author'
@@ -67,6 +70,8 @@ const HomeScreen = () => {
         }
     }
 
+    console.log(user)
+
     return (
         <>
             <NavigationComponent activeLink={'/home'}/>
@@ -78,7 +83,7 @@ const HomeScreen = () => {
                     <div className="row p-4 border rounded">
                         <div className="col text-secondary">
                             <h2 className="text-success">Featured</h2>
-                           <BookList list={featuredbooks}/>
+                            <BookList list={featuredbooks}/>
                         </div>
                         <div className="col text-secondary">
                             <h2 className="text-success">Trending</h2>
@@ -88,23 +93,24 @@ const HomeScreen = () => {
                 </div>
                 <div className="container mt-5 mb-5">
                     <div className="row p-4 border rounded">
-                        <div className="col text-success"><h2>Your To-Read List</h2></div>
-                        <div className="col text-success"><h2>Revisit: Books You've Recently Finished</h2></div>
-                        <div className="w-100"></div>
-                        <div className="col text-secondary">
-                            <div hidden={cookies.loggedIn}>
-                                Log in <a href={"/login"}>here</a> to add to your list!
+                        <div className="row p-4 border rounded">
+                            <div className="col text-secondary">
+                                <h2 className="text-success">Your To-Read List</h2>
+                                <div hidden={cookies.loggedIn}>
+                                    Log in <a href={"/login"}>here</a> to add to your list!
+                                </div>
+                                <div hidden={!cookies.loggedIn}>
+                                    <BookList list={user.toReadList}/>
+                                </div>
                             </div>
-                            <div hidden={!cookies.loggedIn}>
-                                <BookList list={user.toReadList}/>
-                            </div>
-                        </div>
-                        <div className="col text-secondary">
-                            <div hidden={cookies.loggedIn}>
-                                Log in <a href={"/login"}>here</a> to add to your list!
-                            </div>
-                            <div hidden={!cookies.loggedIn}>
-                                <BookList list={user.readList}/>
+                            <div className="col text-secondary">
+                                <h2 className="text-success">Revisit: Books You've Recently Finished</h2>
+                                <div hidden={cookies.loggedIn}>
+                                    Log in <a href={"/login"}>here</a> to add to your list!
+                                </div>
+                                <div hidden={!cookies.loggedIn}>
+                                    <BookList list={user.readList}/>
+                                </div>
                             </div>
                         </div>
                     </div>
