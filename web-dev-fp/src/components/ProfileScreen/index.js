@@ -29,7 +29,7 @@ const ProfileScreen = (params) => {
 
     const privateProfile = params.match.params.authorized === "private"
     const userPage = params.match.params.id
-    console.log(privateProfile)
+    console.log(params.match.params.authorized)
 
     const [user, setUser] = useState({
         _id: '',
@@ -67,7 +67,7 @@ const ProfileScreen = (params) => {
                         readList: theUser.readList
                     })
                     // console.log(theUser)
-                    console.log(user)
+                    //console.log(user)
                 })
         } else if (isAuthor) {
             authorService.findAuthorByUsername(cookies.user)
@@ -98,12 +98,12 @@ const ProfileScreen = (params) => {
                 <div className={"container main-container bg-none"}>
 
                     <div className="text-success mt-5 mb-5" hidden={cookies.loggedIn}>
-                        <h3> Log in <a href={`/login/${user.username}`}>here</a> to view your profile!</h3>
+                        <h3> Log in <a href={`/login`}>here</a> to create your own book lists!</h3>
                     </div>
 
                     <div className="mb-5" hidden={!user.username}>
                         <h2 className="mt-5 text-success">{user.firstName}'s Public Profile </h2>
-                        <h5 className="text-primary">{user.firstName} {user.lastName} @{cookies.user}</h5>
+                        <h5 className="text-primary">{user.firstName} {user.lastName} @{user.username}</h5>
                         <div className={"row"}>
                             <div className={"col"}>
                                 <h5>To Read</h5>
@@ -125,7 +125,7 @@ const ProfileScreen = (params) => {
                         <div className="mb-5" hidden={!cookies.loggedIn}>
 
                             <div hidden={!privateProfile}>
-                                <h2 className="mt-5 text-success">Your Profile Details</h2>
+                                <h2 className="mt-5 text-success">Your Private Profile Details</h2>
                                 <input value={user.username}
                                        onChange={(e) => setUser({
                                            ...user,
@@ -185,7 +185,7 @@ const ProfileScreen = (params) => {
                     </div>
                     <button hidden={!cookies.loggedIn} onClick={() => {
                         clearCookies()
-                        console.log(cookies)
+                        //console.log(cookies)
                     }}
                             className={`btn btn-success`}>Logout
                     </button>
