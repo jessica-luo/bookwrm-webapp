@@ -3,7 +3,7 @@ import React from "react";
 import {ListGroup} from "reactstrap";
 
 const BookList = (params) => {
-    const list = params.list
+    const list = params.list || []
     return (
         <ListGroup className={"list-group"}>
             {
