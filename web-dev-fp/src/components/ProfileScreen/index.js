@@ -2,11 +2,12 @@ import React, {useEffect} from "react";
 import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
 import {useState, useLayoutEffect} from "react";
-import userService, {findUserByUsername, updateUser} from "../../services/userService";
+import userService, {findAllUsers, findUserByUsername, updateUser} from "../../services/userService";
 import authorService, {findAuthorByUsername, updateAuthor} from "../../services/authorService";
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router-dom";
 import BookList from "../BookList";
+import UserList from "../UserList";
 
 //const selectProfile = (state) => state.profile;
 
@@ -56,18 +57,22 @@ const ProfileScreen = (params) => {
         if (!isAuthor) {
             userService.findUserByUsername(userPage)
                 .then(theUser => {
-                    setUser({
-                        _id: theUser._id,
-                        username: theUser.username,
-                        password: theUser.password,
-                        email: theUser.email,
-                        firstName: theUser.firstName,
-                        lastName: theUser.lastName,
-                        toReadList: theUser.toReadList,
-                        currentlyReadingList: theUser.currentlyReadingList,
-                        friends: theUser.friends,
-                        readList: theUser.readList
-                    })
+                    try {
+                        setUser({
+                            _id: theUser._id,
+                            username: theUser.username,
+                            password: theUser.password,
+                            email: theUser.email,
+                            firstName: theUser.firstName,
+                            lastName: theUser.lastName,
+                            toReadList: theUser.toReadList,
+                            currentlyReadingList: theUser.currentlyReadingList,
+                            friends: theUser.friends,
+                            readList: theUser.readList
+                        })
+                    } catch (e) {
+
+                    }
                     // console.log(theUser)
                     //console.log(user)
                 })
@@ -108,6 +113,7 @@ const ProfileScreen = (params) => {
                 friends: user.friends,
                 readList: user.readList
             })
+            alert('Update success, please login again')
         } else {
             updateAuthor({
                 _id: user._id,
@@ -117,11 +123,11 @@ const ProfileScreen = (params) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 toReadList: user.toReadList,
-                currentlyReadingList: user.currentlyReadingList,
-                friends: user.friends,
                 readList: user.readList,
+                currentlyReadingList: user.currentlyReadingList,
                 authoredList: user.authoredList
             })
+            alert('Update success please login again')
         }
     }
 
@@ -138,6 +144,10 @@ const ProfileScreen = (params) => {
 
                     <div className="mb-5" hidden={!user.username}>
                         <h2 className="mt-5 text-success">@{userPage}'s Public Profile </h2>
+                        <div className="p-5" hidden={cookies.type == 'author'}>
+                            <UserList list={user.friends} listType={"Friends List"}/>
+                        </div>
+
                         <div className={"row"}>
                             <div className={"col"}>
                                 <h5>To Read</h5>
@@ -155,7 +165,6 @@ const ProfileScreen = (params) => {
                                 <h5>Authored List</h5>
                                 <BookList list={user.authoredList}/>
                             </div>
-
                         </div>
 
 
@@ -213,7 +222,14 @@ const ProfileScreen = (params) => {
                                            lastName: e.target.value
                                        })}
                                        placeholder={"last name"} className={`form-control mt-1`}/>
-                                <button onClick={() => edit(user)}
+                                <button onClick={() => {
+                                    {
+                                        edit(user)
+                                    }
+                                    {
+                                        clearCookies()
+                                    }
+                                }}
                                         className={`btn btn-success`}>Update Profile
                                 </button>
                             </div>

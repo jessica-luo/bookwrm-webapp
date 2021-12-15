@@ -3,7 +3,7 @@ import {Link, useParams} from "react-router-dom";
 import NavigationComponent from "../NavigationComponent";
 import DetailsScreen from "../DetailsScreen";
 import Footer from "../FooterComponent";
-import { useCookies } from "react-cookie";
+import {useCookies} from "react-cookie";
 
 
 const SearchScreen = () => {
@@ -81,17 +81,13 @@ const SearchScreen = () => {
                                         <td className="align-text-top">
                                             <h3>{book.title}</h3>
                                         </td>
-                                        <button
-                                            className="btn btn-success float-end ms-2">
-                                            Add
-                                        </button>
                                     </tr>
                                     <tr className="mb-5">
                                         <td>
                                             <h5>Author(s): </h5>
                                             {book.author_name.toString().replace(/,/g, ", ")}
                                         </td>
-                                        <td className="float-end">Year Published: {book.first_publish_year}
+                                        <td className="float-end"><b>Year Published:</b> {book.first_publish_year}
                                         </td>
                                     </tr>
                                     <div className="mt-4">
