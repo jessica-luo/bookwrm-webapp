@@ -31,7 +31,7 @@ const DetailsScreen = () => {
         fetchRes.then(results => setBook(results))
         findBookDataByISBNAPI(isbn)
             .then(results => results[isbnForObject].hasOwnProperty('cover') ?
-                setCover(results[isbnForObject].details.cover) : '')
+                setCover(results[isbnForObject].cover) : '')
     }
 
     useEffect(getBookDetails, []);
