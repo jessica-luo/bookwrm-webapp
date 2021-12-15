@@ -16,7 +16,7 @@ const SearchScreen = () => {
     }
 
     const params = useParams();
-    const bookTitle = params.searchTerm;
+    const bookTitle = params.searchTerm || ''
     const [searchTerm, setSearchTerm] = useState(bookTitle);
     const [books, setBooks] = useState([]);
     const [resultNum, setResultNum] = useState(0);
@@ -32,8 +32,6 @@ const SearchScreen = () => {
             setResultNum(d.num_found)
         }).then(results => console.log(books)).catch(e => console.log("error", e))
     }
-
-    console.log("params", params)
 
     useEffect(findBooks, []);
     return (
