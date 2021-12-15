@@ -323,17 +323,6 @@ const DetailsScreen = () => {
                                             </tbody>
                                         </table>
                                     </li>
-                                    <li className="list-group-item"><b>Author(s):</b>
-                                        {
-                                            bookObject['details'] && bookObject['details']['authors'].map(details =>
-                                                <li className="list-group-item">
-                                                    {details.name}
-                                                </li>)
-
-                                        }
-                                    </li>
-
-
                                     <li className="list-group-item"><b>Contributors(s):</b>
                                         {
                                             bookObject['details'] && bookObject['details']['contributors'] && bookObject['details']['contributors'].map(details =>
