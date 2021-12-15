@@ -164,7 +164,7 @@ const ProfileScreen = (params) => {
                     <div className="mb-5" hidden={!user.username}>
                         <h2 className="mt-5 text-success">@{userPage}'s Public Profile </h2>
                         <div className="p-5" hidden={cookies.type == 'author'}>
-                            <InputGroup>
+                            <InputGroup hidden={privateProfile === false}>
                                 <Input id="username-input" placeholder={"Enter username"}
                                        onChange={(e) => setFriend({username: e.target.value})}/>
                                 <Button onClick={addFriend}>

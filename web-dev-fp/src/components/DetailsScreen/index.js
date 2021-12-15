@@ -287,6 +287,18 @@ const DetailsScreen = () => {
                                                     className="btn btn-danger float-end ms-2">
                                                 Delete From Already Read List
                                             </button>
+                                            <button hidden={cookies.type === 'author' && user.readList
+                                                .some(element => parseInt(element.isbn) === parseInt(isbn))}
+                                                    onClick={() => addRead()}
+                                                    className="btn btn-primary float-end ms-2">
+                                                Add To Already Read
+                                            </button>
+                                            <button hidden={cookies.type === 'author' && !user.readList
+                                                .some(element => parseInt(element.isbn) === parseInt(isbn))}
+                                                    onClick={() => deleteRead()}
+                                                    className="btn btn-danger float-end ms-2">
+                                                Delete From Already Read List
+                                            </button>
                                         </p>
                                         <h3>
                                             {bookObject['details'].title.toString()}
@@ -434,7 +446,7 @@ const DetailsScreen = () => {
                             }
                         </ul>
                     </div>
-                    <div className="col text-secondary">
+                    <div className="col-3 text-secondary">
                         <UserList list={bookDB} listType={"Users With This Book On Their To-Read"}/>
                     </div>
                 </div>
