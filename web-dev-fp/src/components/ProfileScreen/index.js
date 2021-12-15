@@ -8,12 +8,15 @@ import {useCookies} from "react-cookie";
 import {useHistory} from "react-router-dom";
 import BookList from "../BookList";
 import UserList from "../UserList";
+import {Button, Input, InputGroup} from "reactstrap";
 
 //const selectProfile = (state) => state.profile;
 
 const ProfileScreen = (params) => {
     const history = useHistory();
     const [cookies, setCookie, removeCookie] = useCookies();
+    const [friend, setFriend] = useState({username:''})
+    const [friends, setFriends] = useState([])
 
     console.log(cookies)
 
@@ -70,9 +73,11 @@ const ProfileScreen = (params) => {
                             friends: theUser.friends,
                             readList: theUser.readList
                         })
+                        setFriends(theUser.friends)
                     } catch (e) {
 
                     }
+
                     // console.log(theUser)
                     //console.log(user)
                 })
@@ -92,10 +97,24 @@ const ProfileScreen = (params) => {
                         readList: theUser.readList,
                         authoredList: theUser.authoredList
                     })
+
+                    setFriends(theUser.friends)
                     // console.log(theUser)
                     // console.log(user)
                 })
         }
+    }
+
+    function addFriend() {
+        console.log(friend.username)
+        userService.addFriend(user._id, friend.username).then(status => {
+            if (status.message === "User does not exist, cannot be added as a friend") {
+                alert(status.message)
+            }
+            else {
+                findUserByUsername()
+            }
+        })
     }
 
     function edit(user) {
@@ -145,7 +164,14 @@ const ProfileScreen = (params) => {
                     <div className="mb-5" hidden={!user.username}>
                         <h2 className="mt-5 text-success">@{userPage}'s Public Profile </h2>
                         <div className="p-5" hidden={cookies.type == 'author'}>
-                            <UserList list={user.friends} listType={"Friends List"}/>
+                            <InputGroup>
+                                <Input id="username-input" placeholder={"Enter username"}
+                                       onChange={(e) => setFriend({username: e.target.value})}/>
+                                <Button onClick={addFriend}>
+                                    Add Friend
+                                </Button>
+                            </InputGroup>
+                            <UserList list={friends} listType={"Friends List"}/>
                         </div>
 
                         <div className={"row"}>

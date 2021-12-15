@@ -114,11 +114,19 @@ export const findInCurrentlyReading = (user, isbn) =>
     fetch(`${URL}/${user._id}/current-read/${isbn}`)
         .then(response => response.json());
 
+export const addFriend = (id, username) =>
+    fetch(`${URL}/${id}/add-friend/${username}`, {
+        method: 'PUT',
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(response => response.json());
+
 
 export default {
     findAllUsers, deleteUser, createUser, findUserByUsername,
     deleteCurrentlyReading, deleteRead, deleteToRead,
     addCurrentlyReading, addToRead, addRead, loginUser, registerUser, updateUser,
-    findInRead, findInCurrentlyReading, findInToRead
+    findInRead, findInCurrentlyReading, findInToRead, addFriend
 };
 
