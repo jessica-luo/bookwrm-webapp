@@ -164,7 +164,7 @@ const ProfileScreen = (params) => {
                     <div className="mb-5" hidden={!user.username}>
                         <h2 className="mt-5 text-success">@{userPage}'s Public Profile </h2>
                         <div className="p-5" hidden={cookies.type == 'author'}>
-                            <InputGroup>
+                            <InputGroup hidden={privateProfile === false}>
                                 <Input id="username-input" placeholder={"Enter username"}
                                        onChange={(e) => setFriend({username: e.target.value})}/>
                                 <Button onClick={addFriend}>
@@ -175,19 +175,19 @@ const ProfileScreen = (params) => {
                         </div>
 
                         <div className={"row"}>
-                            <div className={"col"}>
+                            <div className={"col wd-book-list"}>
                                 <h5>To Read</h5>
                                 <BookList list={user.toReadList}/>
                             </div>
-                            <div className={"col"}>
+                            <div className={"col wd-book-list"}>
                                 <h5>Read</h5>
                                 <BookList list={user.readList}/>
                             </div>
-                            <div className={"col"}>
+                            <div className={"col wd-book-list"}>
                                 <h5>Currently Reading</h5>
                                 <BookList list={user.currentlyReadingList}/>
                             </div>
-                            <div className={"col"} hidden={cookies.type !== 'author'}>
+                            <div className={"col wd-book-list"} hidden={cookies.type !== 'author'}>
                                 <h5>Authored List</h5>
                                 <BookList list={user.authoredList}/>
                             </div>

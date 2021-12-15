@@ -22,6 +22,7 @@ const LoginScreen = () => {
         setCookie("type", type, {
             path: "/"
         });
+        console.log(cookies.type)
     }
 
     const loginUser = (user) =>

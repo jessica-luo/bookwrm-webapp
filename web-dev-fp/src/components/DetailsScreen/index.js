@@ -23,6 +23,7 @@ const DetailsScreen = () => {
     const userLog = cookies.user
     const loggedIn = typeof userLog !== "undefined"
     const [cover, setCover] = useState({cover: ''})
+    console.log(isbn)
 
     const getBookDetails = () => {
 
@@ -30,8 +31,10 @@ const DetailsScreen = () => {
 
         fetchRes.then(results => setBook(results))
         findBookDataByISBNAPI(isbn)
-            .then(results => results[isbnForObject].hasOwnProperty('cover') ?
-                setCover(results[isbnForObject].cover) : '')
+            .then(results => {
+                console.log(results)
+                return results[isbnForObject].hasOwnProperty('cover') ?
+                setCover(results[isbnForObject].cover) : ''})
     }
 
     useEffect(getBookDetails, []);
@@ -287,6 +290,18 @@ const DetailsScreen = () => {
                                                     className="btn btn-danger float-end ms-2">
                                                 Delete From Already Read List
                                             </button>
+                                            <button hidden={cookies.type !== 'author' && user.readList
+                                                .some(element => parseInt(element.isbn) === parseInt(isbn))}
+                                                    onClick={() => addRead()}
+                                                    className="btn btn-primary float-end ms-2">
+                                                Add To Authored List
+                                            </button>
+                                            <button hidden={cookies.type !== 'author' && !user.readList
+                                                .some(element => parseInt(element.isbn) === parseInt(isbn))}
+                                                    onClick={() => deleteRead()}
+                                                    className="btn btn-danger float-end ms-2">
+                                                Delete From Authored List
+                                            </button>
                                         </p>
                                         <h3>
                                             {bookObject['details'].title.toString()}
@@ -434,7 +449,7 @@ const DetailsScreen = () => {
                             }
                         </ul>
                     </div>
-                    <div className="col text-secondary">
+                    <div className="col-3 text-secondary">
                         <UserList list={bookDB} listType={"Users With This Book On Their To-Read"}/>
                     </div>
                 </div>

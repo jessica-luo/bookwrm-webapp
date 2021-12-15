@@ -52,6 +52,11 @@ body {
   color: grey;
 }
 
+.wd-book-list {
+  border: 2px solid grey;
+  min-height: 300px;
+}
+
 .footer{
   margin-top: 1rem;
   padding: 1rem;
