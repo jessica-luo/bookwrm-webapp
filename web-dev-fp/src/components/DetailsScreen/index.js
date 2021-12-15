@@ -91,7 +91,8 @@ const DetailsScreen = () => {
                             toReadList: theUser.toReadList,
                             currentlyReadingList: theUser.currentlyReadingList,
                             friends: theUser.friends,
-                            readList: theUser.readList
+                            readList: theUser.readList,
+                            authoredList: []
                         })
                     } catch (e) {
 
@@ -290,13 +291,13 @@ const DetailsScreen = () => {
                                                     className="btn btn-danger float-end ms-2">
                                                 Delete From Already Read List
                                             </button>
-                                            <button hidden={cookies.type !== 'author' && user.readList
+                                            <button hidden={cookies.type === 'user' || user.authoredList
                                                 .some(element => parseInt(element.isbn) === parseInt(isbn))}
                                                     onClick={() => addRead()}
                                                     className="btn btn-primary float-end ms-2">
-                                                Add To Authored List
+                                                Add to Authored List
                                             </button>
-                                            <button hidden={cookies.type !== 'author' && !user.readList
+                                            <button hidden={cookies.type === 'user' || !user.authoredList
                                                 .some(element => parseInt(element.isbn) === parseInt(isbn))}
                                                     onClick={() => deleteRead()}
                                                     className="btn btn-danger float-end ms-2">
