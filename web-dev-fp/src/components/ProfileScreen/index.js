@@ -33,8 +33,8 @@ const ProfileScreen = (params) => {
         history.push('/home')
     }
 
-    const privateProfile = params.match.params.authorized === "private"
     const userPage = params.match.params.id
+    const privateProfile = params.match.params.authorized === "private" && userPage === cookies.user
     console.log(params.match.params.authorized)
 
     const [user, setUser] = useState({
@@ -262,7 +262,7 @@ const ProfileScreen = (params) => {
 
                         </div>
                     </div>
-                    <button hidden={!cookies.loggedIn} onClick={() => {
+                    <button hidden={!privateProfile} onClick={() => {
                         clearCookies()
                     }}
                             className={`btn btn-success`}>Logout
