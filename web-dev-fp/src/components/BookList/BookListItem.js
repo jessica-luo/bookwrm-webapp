@@ -3,7 +3,6 @@ import React from "react";
 import DetailsScreen from "../DetailsScreen";
 
 const BookListItem = ({book}) => {
-
     return (
         <ListGroupItem className="p-4">
             <a href={`/details/${book.isbn}`}>
@@ -14,7 +13,8 @@ const BookListItem = ({book}) => {
                 </button>
             </a>
             <div className="p-2 text-center">
-                <img src={book.cover} width="150" height="200" alt=""/>
+                <img src={book.cover===''? 'https://i.pinimg.com/originals/b5/48/c4/b548c4b1da24ac7ec74785b4e4581d7f.jpg'
+                    : book.cover} width="150" height="200" alt=""/>
             </div>
             <p className="mb-3">
                 <b>{book.title}</b>

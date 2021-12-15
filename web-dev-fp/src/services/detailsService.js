@@ -8,6 +8,10 @@ export const findBookByISBNAPI = (isbn) =>
     fetch(`${URL}/books?bibkeys=ISBN:${isbn}&jscmd=details&format=json`)
         .then(response => response.json());
 
+export const findBookDataByISBNAPI = (isbn) =>
+    fetch(`${URL}/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`)
+        .then(response => response.json());
+
 export const createBook = (book) =>
     fetch(URL, {
         method: 'POST',
@@ -19,5 +23,5 @@ export const createBook = (book) =>
 
 
 export default {
-    findBook, findBookByISBNAPI, createBook
+    findBook, findBookByISBNAPI, createBook, findBookDataByISBNAPI
 };
