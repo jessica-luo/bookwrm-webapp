@@ -155,7 +155,7 @@ const ProfileScreen = (params) => {
             <>
                 <NavigationComponent activeLink={`/login/${user.username}`}/>
 
-                <div className={"container main-container bg-none"}>
+                <div className={"container page-content main-container bg-none"}>
 
                     <div className="text-success mt-5 mb-5" hidden={cookies.loggedIn}>
                         <h3> Log in <a href={`/login`}>here</a> to create your own book lists!</h3>
@@ -264,7 +264,6 @@ const ProfileScreen = (params) => {
                     </div>
                     <button hidden={!cookies.loggedIn} onClick={() => {
                         clearCookies()
-                        //console.log(cookies)
                     }}
                             className={`btn btn-success`}>Logout
                     </button>
