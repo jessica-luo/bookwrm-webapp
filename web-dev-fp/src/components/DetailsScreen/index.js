@@ -11,6 +11,7 @@ import UserList from "../UserList";
 import BookList from "../BookList";
 import featuredbooks from "../HomeScreen/featuredbooks";
 import trendingbooks from "../HomeScreen/trendingbooks";
+import bookService from "../../services/bookService";
 
 const DetailsScreen = () => {
     const [cookies, setCookie] = useCookies();
@@ -53,6 +54,24 @@ const DetailsScreen = () => {
     useEffect(() => {
         findUserByUsername()
     }, [])
+
+    const [bookDB, setBookDB] = useState([]);
+
+    useEffect(() => {
+        findBookByISBN()
+    }, []);
+
+    const findBookByISBN = () =>
+        bookService.findBookByISBN(isbn)
+            .then(
+                book => {
+                    try {
+                        setBookDB(book.users_added)
+                    } catch (e) {
+
+                    }
+                }
+            )
 
     function findUserByUsername() {
         const isAuthor = cookies.type === 'author'
@@ -417,7 +436,7 @@ const DetailsScreen = () => {
                         </ul>
                     </div>
                     <div className="col text-secondary">
-                        <UserList list={[]} listType={"Users With This Book On Their To-Read"}/>
+                        <UserList list={bookDB} listType={"Users With This Book On Their To-Read"}/>
                     </div>
                 </div>
             </div>
