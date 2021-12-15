@@ -371,7 +371,7 @@ const DetailsScreen = () => {
                         </ul>
                     </div>
                     <div className="col text-secondary">
-                        <UserList/>
+                        <UserList list={[]} listType={"Users With This Book On Their To-Read"}/>
                     </div>
                 </div>
             </div>

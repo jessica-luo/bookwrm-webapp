@@ -3,28 +3,21 @@ import React, {useEffect, useState} from "react";
 import userService from "../../services/userService";
 import {useHistory} from "react-router-dom";
 
-const UserList = () => {
+const UserList = ({list, listType}) => {
     const history = useHistory();
-    const [allUsers, setAllUsers] = useState([])
 
-    useEffect(() => {
-        findAllUsers()
-    }, [])
-
-    const findAllUsers = () =>
-        userService.findAllUsers().then(users => setAllUsers(users))
-
+    console.log(listType)
     return (
         <ListGroup className={"list-group"}>
             <b className="list-group-item text-success">
-                Users With This Book In Their Lists
+                {listType}
             </b>
             {
-                allUsers.map(user => {
+                list.map(user => {
                     return (
-                        <div onClick={() => history.push('/profile/' + user.username)}
+                        <div onClick={() => history.push('/profile/' + user)}
                              className="list-group-item list-group-item-action">
-                            <div className="text-primary">@{user.username}</div>
+                            <div className="text-primary">@{user}</div>
                         </div>
                     );
                 })}

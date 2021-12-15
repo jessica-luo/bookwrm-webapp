@@ -7,6 +7,7 @@ import authorService, {findAuthorByUsername, updateAuthor} from "../../services/
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router-dom";
 import BookList from "../BookList";
+import UserList from "../UserList";
 
 //const selectProfile = (state) => state.profile;
 
@@ -143,6 +144,10 @@ const ProfileScreen = (params) => {
 
                     <div className="mb-5" hidden={!user.username}>
                         <h2 className="mt-5 text-success">@{userPage}'s Public Profile </h2>
+                        <div className="p-5" hidden={cookies.type == 'author'}>
+                            <UserList list={user.friends} listType={"Friends List"}/>
+                        </div>
+
                         <div className={"row"}>
                             <div className={"col"}>
                                 <h5>To Read</h5>
@@ -160,7 +165,6 @@ const ProfileScreen = (params) => {
                                 <h5>Authored List</h5>
                                 <BookList list={user.authoredList}/>
                             </div>
-
                         </div>
 
 
