@@ -17,8 +17,13 @@ export const createBook = (book) =>
         }
     }).then(response => response.json());
 
+export const addUserToBook = (isbn, user) =>
+    fetch(`${URL}/${isbn}/${user}`, {
+        method: 'POST'
+    }).then(response => response.json());
+
 
 export default {
-    findAllBooks, findBookByISBN, createBook
+    findAllBooks, findBookByISBN, createBook, addUserToBook
 };
 

@@ -3,10 +3,11 @@ import NavigationComponent from "../NavigationComponent";
 import {Link, useParams} from "react-router-dom";
 import Footer from "../FooterComponent";
 
-import {findBookByISBNAPI} from "../../services/detailsService";
+import {findBookByISBNAPI, findBookDataByISBNAPI} from "../../services/detailsService";
 import {useCookies} from "react-cookie";
-import userService, {updateUser} from "../../services/userService";
+import userService, {deleteCurrentlyReading, updateUser} from "../../services/userService";
 import authorService from "../../services/authorService";
+import bookService from "../../services/bookService";
 
 const DetailsScreen = () => {
     const [cookies, setCookie] = useCookies();
@@ -18,16 +19,18 @@ const DetailsScreen = () => {
     const bookObject = book[isbnForObject]
     const userLog = cookies.user
     const loggedIn = typeof userLog !== "undefined"
-    //console.log(loggedIn)
+    const [cover, setCover] = useState({cover: ''})
 
     const getBookDetails = () => {
 
         let fetchRes = findBookByISBNAPI(isbn)
 
         fetchRes.then(results => setBook(results))
+        findBookDataByISBNAPI(isbn)
+            .then(results => results[isbnForObject].hasOwnProperty('cover') ?
+                setCover(results[isbnForObject].details.cover) : '')
     }
 
-    //console.log("bookObject", bookObject)
     useEffect(getBookDetails, []);
 
     const [user, setUser] = useState({
@@ -86,105 +89,130 @@ const DetailsScreen = () => {
                         readList: theUser.readList,
                         authoredList: theUser.authoredList
                     })
-                    // console.log(theUser)
-                    // console.log(user)
+
                 })
         }
     }
 
     const isAuthor = cookies.type === 'author'
 
+    function deleteCurrentlyReading() {
+        if (!isAuthor) {
+            userService.deleteCurrentlyReading(user, isbn)
+        } else {
+            authorService.deleteCurrentlyReading(user, isbn)
+        }
+    }
+
+    function deleteToRead() {
+        if (!isAuthor) {
+            userService.deleteToRead(user, isbn)
+        } else {
+            authorService.deleteToRead(user, isbn)
+        }
+    }
+
+    function deleteRead() {
+        if (!isAuthor) {
+            userService.deleteRead(user, isbn)
+        } else {
+            authorService.deleteRead(user, isbn)
+        }
+    }
+
+
     function addCurrentlyReading() {
         if (!isAuthor) {
-            userService.addCurrentlyReading({
-                _id: user._id,
-                username: user.username,
-                password: user.password,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                toReadList: user.toReadList,
-                currentlyReadingList: user.currentlyReadingList,
-                friends: user.friends,
-                readList: user.readList
-            }, isbn)
+            userService.addCurrentlyReading(user,
+                {
+                    isbn: isbn,
+                    title: book[isbnForObject].details.title,
+                    author: book[isbnForObject].details.authors[0].name,
+                    cover: cover.cover,
+                    number_of_pages: book[isbnForObject].details.number_of_pages
+                })
         } else {
-            authorService.addCurrentlyReading({
-                _id: user._id,
-                username: user.username,
-                password: user.password,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                toReadList: user.toReadList,
-                currentlyReadingList: user.currentlyReadingList,
-                friends: user.friends,
-                readList: user.readList,
-                authoredList: user.authoredList
-            }, isbn)
+            authorService.addCurrentlyReading(user,
+                {
+                    isbn: isbn,
+                    title: book[isbnForObject].details.title,
+                    author: book[isbnForObject].details.authors[0].name,
+                    cover: cover.cover,
+                    number_of_pages: book[isbnForObject].details.number_of_pages
+                })
         }
+        bookService.createBook({
+            isbn: isbn,
+            title: book[isbnForObject].details.title,
+            author: book[isbnForObject].details.authors[0].name,
+            cover: cover.cover,
+            number_of_pages: book[isbnForObject].details.number_of_pages,
+            users_added: []
+        })
+        bookService.addUserToBook(isbn, userLog)
     }
 
     function addToRead() {
         if (!isAuthor) {
-            userService.addToRead({
-                _id: user._id,
-                username: user.username,
-                password: user.password,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                toReadList: user.toReadList,
-                currentlyReadingList: user.currentlyReadingList,
-                friends: user.friends,
-                readList: user.readList
-            }, isbn)
+            userService.addToRead(user,
+                {
+                    isbn: isbn,
+                    title: book[isbnForObject].details.title,
+                    author: book[isbnForObject].details.authors[0].name,
+                    cover: cover.cover,
+                    number_of_pages: book[isbnForObject].details.number_of_pages
+                })
         } else {
-            authorService.addToRead({
-                _id: user._id,
-                username: user.username,
-                password: user.password,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                toReadList: user.toReadList,
-                currentlyReadingList: user.currentlyReadingList,
-                friends: user.friends,
-                readList: user.readList,
-                authoredList: user.authoredList
-            }, isbn)
+            authorService.addToRead(
+                user,
+                {
+                    isbn: isbn,
+                    title: book[isbnForObject].details.title,
+                    author: book[isbnForObject].details.authors[0].name,
+                    cover: cover.cover,
+                    number_of_pages: book[isbnForObject].details.number_of_pages
+                })
         }
+        bookService.createBook({
+            isbn: isbn,
+            title: book[isbnForObject].details.title,
+            author: book[isbnForObject].details.authors[0].name,
+            cover: cover.cover,
+            number_of_pages: book[isbnForObject].details.number_of_pages,
+            users_added: []
+        })
+        bookService.addUserToBook(isbn, userLog)
     }
 
     function addRead() {
         if (!isAuthor) {
-            userService.addRead({
-                _id: user._id,
-                username: user.username,
-                password: user.password,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                toReadList: user.toReadList,
-                currentlyReadingList: user.currentlyReadingList,
-                friends: user.friends,
-                readList: user.readList
-            }, isbn)
+            userService.addRead(user,
+                {
+                    isbn: isbn,
+                    title: book[isbnForObject].details.title,
+                    author: book[isbnForObject].details.authors[0].name,
+                    cover: cover.cover,
+                    number_of_pages: book[isbnForObject].details.number_of_pages
+                })
         } else {
-            authorService.addRead({
-                _id: user._id,
-                username: user.username,
-                password: user.password,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                toReadList: user.toReadList,
-                currentlyReadingList: user.currentlyReadingList,
-                friends: user.friends,
-                readList: user.readList,
-                authoredList: user.authoredList
-            }, isbn)
+            authorService.addRead(user,
+                {
+                    isbn: isbn,
+                    title: book[isbnForObject].details.title,
+                    author: book[isbnForObject].details.authors[0].name,
+                    cover: cover.cover,
+                    number_of_pages: book[isbnForObject].details.number_of_pages
+                })
         }
+        bookService.createBook({
+            isbn: isbn,
+            title: book[isbnForObject].details.title,
+            author: book[isbnForObject].details.authors[0].name,
+            cover: cover.cover,
+            number_of_pages: book[isbnForObject].details.number_of_pages,
+            users_added: []
+        })
+        bookService.addUserToBook(isbn, userLog)
     }
 
     return (
@@ -201,20 +229,41 @@ const DetailsScreen = () => {
                         bookObject &&
                         <div>
                             <li className="list-group-item">
-                                <button hidden={!loggedIn}
+                                <button hidden={!loggedIn || user.currentlyReadingList
+                                    .some(element => parseInt(element.isbn) === parseInt(isbn))}
                                         onClick={() => addCurrentlyReading()}
                                         className="btn btn-success float-end ms-2">
-                                    Add Currently Reading
+                                    Add to Currently Reading
                                 </button>
-                                <button hidden={!loggedIn}
+                                <button hidden={!loggedIn || !user.currentlyReadingList
+                                    .some(element => parseInt(element.isbn) === parseInt(isbn))}
+                                        onClick={() => deleteCurrentlyReading()}
+                                        className="btn btn-danger float-end ms-2">
+                                    Delete from Currently Reading
+                                </button>
+                                <button hidden={!loggedIn || user.toReadList
+                                    .some(element => parseInt(element.isbn) === parseInt(isbn))}
                                         onClick={() => addToRead()}
                                         className="btn btn-warning float-end ms-2">
                                     Add To Your To-Read
                                 </button>
-                                <button hidden={!loggedIn}
+                                <button hidden={!loggedIn || !user.toReadList
+                                    .some(element => parseInt(element.isbn) === parseInt(isbn))}
+                                        onClick={() => deleteToRead()}
+                                        className="btn btn-danger float-end ms-2">
+                                    Delete From To-Read List
+                                </button>
+                                <button hidden={!loggedIn || user.readList
+                                    .some(element => parseInt(element.isbn) === parseInt(isbn))}
                                         onClick={() => addRead()}
                                         className="btn btn-primary float-end ms-2">
                                     Add To Already Read
+                                </button>
+                                <button hidden={!loggedIn || !user.readList
+                                    .some(element => parseInt(element.isbn) === parseInt(isbn))}
+                                        onClick={() => deleteRead()}
+                                        className="btn btn-danger float-end ms-2">
+                                    Delete From Already Read List
                                 </button>
                                 <img src={bookObject.thumbnail_url}/>
                                 <h3>

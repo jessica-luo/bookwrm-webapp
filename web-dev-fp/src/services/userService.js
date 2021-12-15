@@ -39,28 +39,28 @@ export const findUserByUsername = (username) =>
     fetch(`${URL}/username/${username}`)
         .then(response => response.json());
 
-export const addToRead = (user, isbn) =>
-    fetch(`${URL}/${user._id}/to-read/add/${isbn}`, {
+export const addToRead = (user, book) =>
+    fetch(`${URL}/${user._id}/to-read/add`, {
         method: 'PUT',
-        body: JSON.stringify(user),
+        body: JSON.stringify(book),
         headers: {
             'content-type': 'application/json'
         }
     }).then(response => response.json());
 
-export const addRead = (user, isbn) =>
-    fetch(`${URL}/${user._id}/read/add/${isbn}`, {
+export const addRead = (user, book) =>
+    fetch(`${URL}/${user._id}/read/add`, {
         method: 'PUT',
-        body: JSON.stringify(user),
+        body: JSON.stringify(book),
         headers: {
             'content-type': 'application/json'
         }
     }).then(response => response.json());
 
-export const addCurrentlyReading = (user, isbn) =>
-    fetch(`${URL}/${user._id}/current-read/add/${isbn}`, {
+export const addCurrentlyReading = (user, book) =>
+    fetch(`${URL}/${user._id}/current-read/add`, {
         method: 'PUT',
-        body: JSON.stringify(user),
+        body: JSON.stringify(book),
         headers: {
             'content-type': 'application/json'
         }
@@ -102,10 +102,23 @@ export const updateUser = (user) =>
         }
     }).then(res => console.log("aaaa", res));
 
+export const findInToRead = (user, isbn) =>
+    fetch(`${URL}/${user._id}/to-read/${isbn}`)
+        .then(response => response.json());
+
+export const findInRead = (user, isbn) =>
+    fetch(`${URL}/${user._id}/read/${isbn}`)
+        .then(response => response.json());
+
+export const findInCurrentlyReading = (user, isbn) =>
+    fetch(`${URL}/${user._id}/current-read/${isbn}`)
+        .then(response => response.json());
+
 
 export default {
     findAllUsers, deleteUser, createUser, findUserByUsername,
     deleteCurrentlyReading, deleteRead, deleteToRead,
-    addCurrentlyReading, addToRead, addRead, loginUser, registerUser, updateUser
+    addCurrentlyReading, addToRead, addRead, loginUser, registerUser, updateUser,
+    findInRead, findInCurrentlyReading, findInToRead
 };
 
