@@ -11,7 +11,6 @@ import UserList from "../UserList";
 import BookList from "../BookList";
 import featuredbooks from "../HomeScreen/featuredbooks";
 import trendingbooks from "../HomeScreen/trendingbooks";
-import bookService from "../../services/bookService";
 
 const DetailsScreen = () => {
     const [cookies, setCookie] = useCookies();
