@@ -241,7 +241,7 @@ const DetailsScreen = () => {
             <NavigationComponent activeLink={'/details/'}/>
             <br/><br/><br/>
 
-            <div className="container">
+            <div className="container page-content">
                 <h1 className="text-success">Book Details</h1>
                 <div className="row p-4 rounded">
                     <div className="col text-secondary">

@@ -33,8 +33,8 @@ const ProfileScreen = (params) => {
         history.push('/home')
     }
 
-    const privateProfile = params.match.params.authorized === "private"
     const userPage = params.match.params.id
+    const privateProfile = params.match.params.authorized === "private" && userPage === cookies.user
     console.log(params.match.params.authorized)
 
     const [user, setUser] = useState({
@@ -155,7 +155,7 @@ const ProfileScreen = (params) => {
             <>
                 <NavigationComponent activeLink={`/login/${user.username}`}/>
 
-                <div className={"container main-container bg-none"}>
+                <div className={"container page-content main-container bg-none"}>
 
                     <div className="text-success mt-5 mb-5" hidden={cookies.loggedIn}>
                         <h3> Log in <a href={`/login`}>here</a> to create your own book lists!</h3>
@@ -262,9 +262,8 @@ const ProfileScreen = (params) => {
 
                         </div>
                     </div>
-                    <button hidden={!cookies.loggedIn} onClick={() => {
+                    <button hidden={!privateProfile} onClick={() => {
                         clearCookies()
-                        //console.log(cookies)
                     }}
                             className={`btn btn-success`}>Logout
                     </button>
