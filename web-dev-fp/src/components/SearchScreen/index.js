@@ -16,7 +16,7 @@ const SearchScreen = () => {
     }
 
     const params = useParams();
-    const bookTitle = params.searchTerm || 'batman';
+    const bookTitle = params.searchTerm;
     const [searchTerm, setSearchTerm] = useState(bookTitle);
     const [books, setBooks] = useState([]);
     const [resultNum, setResultNum] = useState(0);
