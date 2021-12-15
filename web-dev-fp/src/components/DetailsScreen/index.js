@@ -23,6 +23,7 @@ const DetailsScreen = () => {
     const userLog = cookies.user
     const loggedIn = typeof userLog !== "undefined"
     const [cover, setCover] = useState({cover: ''})
+    console.log(isbn)
 
     const getBookDetails = () => {
 
@@ -30,8 +31,10 @@ const DetailsScreen = () => {
 
         fetchRes.then(results => setBook(results))
         findBookDataByISBNAPI(isbn)
-            .then(results => results[isbnForObject].hasOwnProperty('cover') ?
-                setCover(results[isbnForObject].cover) : '')
+            .then(results => {
+                console.log(results)
+                return results[isbnForObject].hasOwnProperty('cover') ?
+                setCover(results[isbnForObject].cover) : ''})
     }
 
     useEffect(getBookDetails, []);
@@ -287,17 +290,17 @@ const DetailsScreen = () => {
                                                     className="btn btn-danger float-end ms-2">
                                                 Delete From Already Read List
                                             </button>
-                                            <button hidden={cookies.type === 'author' && user.readList
+                                            <button hidden={cookies.type !== 'author' && user.readList
                                                 .some(element => parseInt(element.isbn) === parseInt(isbn))}
                                                     onClick={() => addRead()}
                                                     className="btn btn-primary float-end ms-2">
-                                                Add To Already Read
+                                                Add To Authored List
                                             </button>
-                                            <button hidden={cookies.type === 'author' && !user.readList
+                                            <button hidden={cookies.type !== 'author' && !user.readList
                                                 .some(element => parseInt(element.isbn) === parseInt(isbn))}
                                                     onClick={() => deleteRead()}
                                                     className="btn btn-danger float-end ms-2">
-                                                Delete From Already Read List
+                                                Delete From Authored List
                                             </button>
                                         </p>
                                         <h3>

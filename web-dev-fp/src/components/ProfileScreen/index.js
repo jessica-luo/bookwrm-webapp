@@ -175,19 +175,19 @@ const ProfileScreen = (params) => {
                         </div>
 
                         <div className={"row"}>
-                            <div className={"col"}>
+                            <div className={"col wd-book-list"}>
                                 <h5>To Read</h5>
                                 <BookList list={user.toReadList}/>
                             </div>
-                            <div className={"col"}>
+                            <div className={"col wd-book-list"}>
                                 <h5>Read</h5>
                                 <BookList list={user.readList}/>
                             </div>
-                            <div className={"col"}>
+                            <div className={"col wd-book-list"}>
                                 <h5>Currently Reading</h5>
                                 <BookList list={user.currentlyReadingList}/>
                             </div>
-                            <div className={"col"} hidden={cookies.type !== 'author'}>
+                            <div className={"col wd-book-list"} hidden={cookies.type !== 'author'}>
                                 <h5>Authored List</h5>
                                 <BookList list={user.authoredList}/>
                             </div>

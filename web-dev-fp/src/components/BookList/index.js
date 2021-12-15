@@ -5,7 +5,7 @@ import {ListGroup} from "reactstrap";
 const BookList = (params) => {
     const list = params.list || []
     return (
-        <ListGroup className={"list-group wd-book-list"}>
+        <ListGroup className={"list-group"}>
             {
                 list.map(book => {
                     return (<BookListItem book={book}/>);
