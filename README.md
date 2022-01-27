@@ -1,1 +1,3 @@
-# web-dev-final-project
+# Bookwrm
+
+by Chloe Strandwold, Sheryl Deakin, and Jessica Luo
