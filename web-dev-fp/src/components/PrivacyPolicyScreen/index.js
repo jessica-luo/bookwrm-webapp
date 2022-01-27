@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect} from "react";
+import React from "react";
 import NavigationComponent from "../NavigationComponent";
 import Footer from "../FooterComponent";
 
@@ -90,7 +90,7 @@ const PrivacyPolicyScreen = () => {
 
                 <h5>Contact us</h5>
                 If you have any questions about this privacy policy, you can contact us by email:
-                <a href={'#'}>privacy@bookwrm.com</a>
+                <a href={''}>privacy@bookwrm.com</a>
 
 
             </div>

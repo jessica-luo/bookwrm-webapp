@@ -1,4 +1,4 @@
-export default [
+const featuredbooks = [
     {
         title: 'Slaughterhouse-Five',
         author: 'Kurt Vonnegut',
@@ -21,3 +21,5 @@ export default [
         isbn: '9781785151552'
     }
 ]
+
+export default featuredbooks

@@ -22,8 +22,8 @@ export const addUserToBook = (isbn, user) =>
         method: 'POST'
     }).then(response => response.json());
 
-
-export default {
+const bookService = {
     findAllBooks, findBookByISBN, createBook, addUserToBook
 };
 
+export default bookService;

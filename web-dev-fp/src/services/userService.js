@@ -122,11 +122,12 @@ export const addFriend = (id, username) =>
         }
     }).then(response => response.json());
 
-
-export default {
+const userService = {
     findAllUsers, deleteUser, createUser, findUserByUsername,
     deleteCurrentlyReading, deleteRead, deleteToRead,
     addCurrentlyReading, addToRead, addRead, loginUser, registerUser, updateUser,
     findInRead, findInCurrentlyReading, findInToRead, addFriend
 };
+
+export default userService
 

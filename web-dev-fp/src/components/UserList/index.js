@@ -1,6 +1,6 @@
 import {ListGroup} from "reactstrap";
-import React, {useEffect, useState} from "react";
-import userService from "../../services/userService";
+import React from "react";
+
 import {useHistory} from "react-router-dom";
 
 const UserList = ({list, listType}) => {
@@ -23,12 +23,12 @@ const UserList = ({list, listType}) => {
                 list.map(user => {
                     return (
                         <div onClick={() => {
-                            {
-                                history.push('/profile/' + user)
-                            }
-                            {
-                                refreshPage()
-                            }
+
+                            history.push('/profile/' + user)
+
+
+                            refreshPage()
+
                         }}
                              className="list-group-item list-group-item-action">
                             <div className="text-primary">@{user}</div>

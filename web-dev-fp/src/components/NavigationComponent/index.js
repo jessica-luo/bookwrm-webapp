@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect} from "react";
+import React from "react";
 import {Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Nav, NavLink} from "reactstrap";
 import styles from "./nav-bar.module.css";
 import { withCookies, Cookies } from "react-cookie";

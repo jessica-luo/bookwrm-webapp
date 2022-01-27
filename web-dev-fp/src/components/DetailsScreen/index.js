@@ -1,19 +1,16 @@
-import React, {useEffect, useLayoutEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import NavigationComponent from "../NavigationComponent";
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import Footer from "../FooterComponent";
 import {findBookByISBNAPI, findBookDataByISBNAPI} from "../../services/detailsService";
 import {useCookies} from "react-cookie";
-import userService, {deleteCurrentlyReading, updateUser} from "../../services/userService";
+import userService from "../../services/userService";
 import authorService from "../../services/authorService";
 import bookService from "../../services/bookService";
 import UserList from "../UserList";
-import BookList from "../BookList";
-import featuredbooks from "../HomeScreen/featuredbooks";
-import trendingbooks from "../HomeScreen/trendingbooks";
 
 const DetailsScreen = () => {
-    const [cookies, setCookie] = useCookies();
+    const [cookies] = useCookies();
 
     let {id} = useParams();
     const isbn = id || '9780980200447';
@@ -34,10 +31,11 @@ const DetailsScreen = () => {
             .then(results => {
                 console.log(results)
                 return results[isbnForObject].hasOwnProperty('cover') ?
-                setCover(results[isbnForObject].cover) : ''})
+                    setCover(results[isbnForObject].cover) : ''
+            })
     }
 
-    useEffect(getBookDetails, []);
+    useEffect(getBookDetails, [isbn, isbnForObject]);
 
     const [user, setUser] = useState({
         _id: '',
@@ -55,13 +53,9 @@ const DetailsScreen = () => {
 
     useEffect(() => {
         findUserByUsername()
-    }, [])
+    }, [findUserByUsername])
 
     const [bookDB, setBookDB] = useState([]);
-
-    useEffect(() => {
-        findBookByISBN()
-    }, []);
 
     const findBookByISBN = () =>
         bookService.findBookByISBN(isbn)
@@ -74,6 +68,10 @@ const DetailsScreen = () => {
                     }
                 }
             )
+
+    useEffect(() => {
+        findBookByISBN()
+    }, [findBookByISBN]);
 
     function findUserByUsername() {
         const isAuthor = cookies.type === 'author'
@@ -307,7 +305,7 @@ const DetailsScreen = () => {
                                         <h3>
                                             {bookObject['details'].title.toString()}
                                         </h3>
-                                        <img src={bookObject.thumbnail_url}/>
+                                        <img src={bookObject.thumbnail_url} alt={""}/>
                                     </li>
                                     <li className="list-group-item">
                                         <b>bib_key:</b> {bookObject.bib_key.replace(/:/g, ": ")}

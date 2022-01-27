@@ -9,7 +9,7 @@ import userService from "../../services/userService";
 import authorService from "../../services/authorService";
 
 const HomeScreen = () => {
-    const [cookies, setCookie] = useCookies();
+    const [cookies] = useCookies();
 
     const [user, setUser] = useState({
         _id: '',
@@ -29,12 +29,12 @@ const HomeScreen = () => {
         if (cookies.hasOwnProperty('user') && cookies.loggedIn === true) {
             findUserByUsername()
         }
-    }, [])
+    }, [cookies, findUserByUsername])
 
 
     useEffect(() => {
         findUserByUsername()
-    }, [])
+    }, [findUserByUsername])
 
     function findUserByUsername() {
         const isAuthor = cookies.type === 'author'

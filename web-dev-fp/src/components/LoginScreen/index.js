@@ -30,10 +30,10 @@ const LoginScreen = () => {
             .then(state => {
                 if (state.message === "Login success") {
                     handleCookie('user')
-                    {
-                        alert(state.message)
-                    }
-                    history.push('/profile/private/'+ state.user.username)
+
+                    alert(state.message)
+
+                    history.push('/profile/private/' + state.user.username)
                 } else {
                     alert(state.message)
                 }
@@ -46,7 +46,7 @@ const LoginScreen = () => {
                 if (state.message === "Login success") {
                     handleCookie('author')
                     alert(state.message)
-                    history.push('/profile/private/'+ state.user.username)
+                    history.push('/profile/private/' + state.user.username)
                 } else {
                     alert(state.message)
                 }

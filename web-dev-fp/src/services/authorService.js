@@ -115,12 +115,12 @@ export const findInCurrentlyReading = (user, isbn) =>
     fetch(`${URL}/${user._id}/current-read/${isbn}`)
         .then(response => response.json());
 
-
-
-export default {
+const authorService = {
     findAllAuthors, deleteAuthor, createAuthor, findAuthorByUsername, updateAuthor,
     registerAuthor, loginAuthor, addToRead, addRead, addCurrentlyReading,
     deleteToRead, deleteCurrentlyReading, deleteRead,
     findInToRead, findInCurrentlyReading, findInRead
 };
+
+export default authorService;
 

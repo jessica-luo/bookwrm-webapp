@@ -1,19 +1,11 @@
-import React, {useState, useEffect, useLayoutEffect} from "react";
-import {Link, useParams} from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
 import NavigationComponent from "../NavigationComponent";
 import DetailsScreen from "../DetailsScreen";
 import Footer from "../FooterComponent";
-import {useCookies} from "react-cookie";
 
 
 const SearchScreen = () => {
-    const [cookies, setCookie] = useCookies();
-
-    function handleCookie() {
-        setCookie("user", "hello", {
-            path: "/"
-        });
-    }
 
     const params = useParams();
     const bookTitle = params.searchTerm || ''
@@ -33,7 +25,7 @@ const SearchScreen = () => {
         }).then(results => console.log(books)).catch(e => console.log("error", e))
     }
 
-    useEffect(findBooks, []);
+    useEffect(findBooks, [books, searchTerm]);
     return (
         <>
             <NavigationComponent activeLink={'/search'}/>

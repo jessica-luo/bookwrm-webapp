@@ -1,4 +1,4 @@
-export default [
+const trendingbooks = [
     {
         title: 'The Song of Achilles',
         author: 'Madeline Miller',
@@ -21,3 +21,5 @@ export default [
         isbn: '9781982147662'
     }
 ]
+
+export default trendingbooks

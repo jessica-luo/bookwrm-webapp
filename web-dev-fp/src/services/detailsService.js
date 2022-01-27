@@ -21,7 +21,8 @@ export const createBook = (book) =>
         }
     }).then(response => response.json());
 
-
-export default {
+const detailsService = {
     findBook, findBookByISBNAPI, createBook, findBookDataByISBNAPI
 };
+
+export default detailsService

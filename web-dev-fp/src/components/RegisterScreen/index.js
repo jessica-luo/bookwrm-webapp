@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from "react";
+import React, {useState} from "react";
 import NavigationComponent from "../NavigationComponent";
 import userService from "../../services/userService";
 import authorService from "../../services/authorService";
@@ -21,7 +21,7 @@ const RegisterScreen = () => {
                 if (state.message === "User already exists, try logging in") {
                     alert(state.message)
                 } else {
-                    alert("Success! Please review our privacy policy and then log in." )
+                    alert("Success! Please review our privacy policy and then log in.")
                     history.push('/privacy')
                 }
             })
@@ -32,83 +32,83 @@ const RegisterScreen = () => {
                 if (state.message === "User already exists, try logging in") {
                     alert(state.message)
                 } else {
-                    alert("Success! Please review our privacy policy and then log in." )
+                    alert("Success! Please review our privacy policy and then log in.")
                     history.push('/privacy')
                 }
             })
 
-    {
-        return (
-            <>
-                <NavigationComponent activeLink={'/login'}/>
 
-                <div className={"container main-container bg-none"}>
+    return (
+        <>
+            <NavigationComponent activeLink={'/login'}/>
 
-                    <h1 className={"mt-5"}>Register</h1>
-                    <input value={user.username}
-                           onChange={(e) => setUser({
-                               ...user,
-                               username: e.target.value,
-                               password: user.password,
-                               email: user.email,
-                               firstName: user.firstName,
-                               lastName: user.lastName
-                           })}
-                           placeholder={"username"} className={`form-control mt-1`}/>
-                    <input value={user.password}
-                           onChange={(e) => setUser({
-                               ...user,
-                               username: user.username,
-                               password: e.target.value,
-                               email: user.email,
-                               firstName: user.firstName,
-                               lastName: user.lastName
-                           })}
-                           placeholder={"password"} type={"password"} className={`form-control mt-1`}/>
-                    <input value={user.email}
-                           onChange={(e) => setUser({
-                               ...user,
-                               username: user.username,
-                               password: user.password,
-                               email: e.target.value,
-                               firstName: user.firstName,
-                               lastName: user.lastName
-                           })}
-                           placeholder={"email"} className={`form-control mt-1`}/>
-                    <input value={user.firstName}
-                           onChange={(e) => setUser({
-                               ...user,
-                               username: user.username,
-                               password: user.password,
-                               email: user.email,
-                               firstName: e.target.value,
-                               lastName: user.lastName
-                           })}
-                           placeholder={"first name"} className={`form-control mt-1`}/>
-                    <input value={user.lastName}
-                           onChange={(e) => setUser({
-                               ...user,
-                               username: user.username,
-                               password: user.password,
-                               email: user.email,
-                               firstName: user.firstName,
-                               lastName: e.target.value
-                           })}
-                           placeholder={"last name"} className={`form-control mt-1`}/>
-                    <button onClick={() => registerUser(user)}
-                            className={`btn btn-success mt-1`}>Register as a Reader
-                    </button>
+            <div className={"container main-container bg-none"}>
 
-                    <button onClick={() => registerAuthor(user)}
-                            className={`btn btn-primary mt-1`}>Register as an Author
-                    </button>
+                <h1 className={"mt-5"}>Register</h1>
+                <input value={user.username}
+                       onChange={(e) => setUser({
+                           ...user,
+                           username: e.target.value,
+                           password: user.password,
+                           email: user.email,
+                           firstName: user.firstName,
+                           lastName: user.lastName
+                       })}
+                       placeholder={"username"} className={`form-control mt-1`}/>
+                <input value={user.password}
+                       onChange={(e) => setUser({
+                           ...user,
+                           username: user.username,
+                           password: e.target.value,
+                           email: user.email,
+                           firstName: user.firstName,
+                           lastName: user.lastName
+                       })}
+                       placeholder={"password"} type={"password"} className={`form-control mt-1`}/>
+                <input value={user.email}
+                       onChange={(e) => setUser({
+                           ...user,
+                           username: user.username,
+                           password: user.password,
+                           email: e.target.value,
+                           firstName: user.firstName,
+                           lastName: user.lastName
+                       })}
+                       placeholder={"email"} className={`form-control mt-1`}/>
+                <input value={user.firstName}
+                       onChange={(e) => setUser({
+                           ...user,
+                           username: user.username,
+                           password: user.password,
+                           email: user.email,
+                           firstName: e.target.value,
+                           lastName: user.lastName
+                       })}
+                       placeholder={"first name"} className={`form-control mt-1`}/>
+                <input value={user.lastName}
+                       onChange={(e) => setUser({
+                           ...user,
+                           username: user.username,
+                           password: user.password,
+                           email: user.email,
+                           firstName: user.firstName,
+                           lastName: e.target.value
+                       })}
+                       placeholder={"last name"} className={`form-control mt-1`}/>
+                <button onClick={() => registerUser(user)}
+                        className={`btn btn-success mt-1`}>Register as a Reader
+                </button>
 
-                    <p className={"mb-5"}>*Author accounts have different permissions from readers.</p>
-                </div>
-                <Footer/>
-            </>
-        )
-    }
+                <button onClick={() => registerAuthor(user)}
+                        className={`btn btn-primary mt-1`}>Register as an Author
+                </button>
+
+                <p className={"mb-5"}>*Author accounts have different permissions from readers.</p>
+            </div>
+            <Footer/>
+        </>
+    )
+
 };
 
 export default RegisterScreen;
